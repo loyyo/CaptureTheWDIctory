@@ -1,0 +1,45 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	transition: all 0.5s ease;
+}
+
+// Link
+
+.href {
+	color: white;
+}
+.href:hover {
+	color: white;
+}
+
+.href-black {
+	color: black;
+}
+.href-black:hover {
+	color: black;
+}
+
+// leaderboard
+
+.leaderboard {
+	text-align: center;
+}
+
+.App-title {
+	font-size: 1.5em;
+}
+
+.leaderboard-header {
+	background-color: #3f51b5;
+	color: white;
+	width: 100%;
+	padding: 15px;
+	margin-top: 20px;
+	font-size: 20px;
+}
+
+.overflow-table {
+	overflow-x: auto;
+}
