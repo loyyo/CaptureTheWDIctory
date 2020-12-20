@@ -11,7 +11,7 @@ const TableRow = (props) => {
 		<tr>
 			<td>{props.id}</td>
 			<td align='left'>
-				<a href={fccURL} target='_blank'>
+				<a href={fccURL} target='_blank' rel='noreferrer'>
 					<img className='camper-image' src={img} alt='no img'></img>
 					<span className='camper-name'>{username}</span>
 				</a>

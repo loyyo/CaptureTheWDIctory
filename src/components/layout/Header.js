@@ -9,6 +9,7 @@ import Menu from '@material-ui/core/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import IconButton from '@material-ui/core/IconButton';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -28,8 +29,22 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
 	const classes = useStyles();
+
 	const [anchorEl, setAnchorEl] = useState(null);
+	const [error, setError] = useState('error');
 	const open = Boolean(anchorEl);
+
+	const { currentUser, logout } = useAuth();
+
+	async function handleLogout() {
+		setError('');
+		try {
+			await logout();
+		} catch {
+			setError('Failed to log out');
+			console.log(error);
+		}
+	}
 
 	const handleMenu = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -88,26 +103,39 @@ const Header = () => {
 								open={open}
 								onClose={handleClose}
 							>
-								<MenuItem onClick={handleClose}>
-									<Link className='href-black' to='/login'>
-										Login
-									</Link>
-								</MenuItem>
-								<MenuItem onClick={handleClose}>
-									<Link className='href-black' to='/rejestracja'>
-										Sign Up
-									</Link>
-								</MenuItem>
-								<MenuItem onClick={handleClose}>
-									<Link className='href-black' to='/profil'>
-										Profile
-									</Link>
-								</MenuItem>
-								<MenuItem onClick={handleClose}>
-									<Link className='href-black' to='/profil/edytuj'>
-										Settings
-									</Link>
-								</MenuItem>
+								{currentUser === null && (
+									<>
+										<MenuItem onClick={handleClose}>
+											<Link className='href-black' to='/login'>
+												Login
+											</Link>
+										</MenuItem>
+										<MenuItem onClick={handleClose}>
+											<Link className='href-black' to='/rejestracja'>
+												Sign Up
+											</Link>
+										</MenuItem>
+									</>
+								)}
+								{currentUser !== null && (
+									<>
+										<MenuItem onClick={handleClose}>
+											<Link className='href-black' to='/profil'>
+												Profile
+											</Link>
+										</MenuItem>
+										<MenuItem onClick={handleClose}>
+											<Link className='href-black' to='/profil/edytuj'>
+												Settings
+											</Link>
+										</MenuItem>
+										<MenuItem onClick={handleClose}>
+											<Link onClick={handleLogout} className='href-black' to='/'>
+												Logout
+											</Link>
+										</MenuItem>
+									</>
+								)}
 							</Menu>
 						</div>
 					</Toolbar>

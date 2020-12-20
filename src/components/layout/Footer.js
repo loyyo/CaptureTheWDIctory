@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -8,6 +8,7 @@ import EqualizerIcon from '@material-ui/icons/Equalizer';
 import PersonIcon from '@material-ui/icons/Person';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
 	root: {
@@ -19,6 +20,18 @@ const useStyles = makeStyles({
 const Footer = () => {
 	const classes = useStyles();
 	const [value, setValue] = useState(null);
+	const history = useHistory();
+
+	useEffect(() => {
+		if (history.location.pathname !== '/wyzwania') {
+			if (history.location.pathname !== '/tabela') {
+				if (history.location.pathname !== '/profil') {
+					setValue(null);
+				}
+			}
+		}
+	}, [history.location.pathname]);
+
 	return (
 		<div>
 			<Box mt={3}>
@@ -32,33 +45,21 @@ const Footer = () => {
 				>
 					<BottomNavigationAction
 						onClick={() => {
-							window.history.pushState(
-								{ additionalInformation: 'Updated the URL with JS' },
-								'Capture The WDIctory',
-								'http://localhost:3000/wyzwania'
-							);
+							history.push('/wyzwania');
 						}}
 						label='Challenges'
 						icon={<FlagIcon />}
 					/>
 					<BottomNavigationAction
 						onClick={() => {
-							window.history.pushState(
-								{ additionalInformation: 'Updated the URL with JS' },
-								'Capture The WDIctory',
-								'http://localhost:3000/tabela'
-							);
+							history.push('/tabela');
 						}}
 						label='Leaderboard'
 						icon={<EqualizerIcon />}
 					/>
 					<BottomNavigationAction
 						onClick={() => {
-							window.history.pushState(
-								{ additionalInformation: 'Updated the URL with JS' },
-								'Capture The WDIctory',
-								'http://localhost:3000/profil'
-							);
+							history.push('/profil');
 						}}
 						label='Profile'
 						icon={<PersonIcon />}
@@ -68,7 +69,7 @@ const Footer = () => {
 			<Box mt={3}>
 				<Typography variant='body2' color='textSecondary' align='center'>
 					{'Copyright © '}
-					<Link color='inherit' href='#'>
+					<Link color='inherit' href='https://github.com/loyyo/CaptureTheWDIctory'>
 						Capture The WDIctory
 					</Link>{' '}
 					{new Date().getFullYear()}
