@@ -10,6 +10,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import IconButton from '@material-ui/core/IconButton';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import FlagIcon from '@material-ui/icons/Flag';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -20,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: '#000000',
 	},
 	menuButton: {
-		marginRight: theme.spacing(2),
+		marginRight: theme.spacing(-1),
 	},
 	title: {
 		flexGrow: 1,
@@ -67,14 +69,14 @@ const Header = () => {
 							</Button>
 						</Typography>
 
-						<Button>
+						<Button className={classes.menuButton}>
 							<Link className='href' to='/wyzwania'>
-								Challenges
+								<FlagIcon />
 							</Link>
 						</Button>
 						<Button>
 							<Link className='href' to='/tabela'>
-								Leaderboard
+								<EqualizerIcon />
 							</Link>
 						</Button>
 
