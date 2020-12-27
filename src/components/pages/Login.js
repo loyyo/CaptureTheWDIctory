@@ -58,22 +58,25 @@ export default function SignIn() {
 
 		if (!rememberRef.current.checked) {
 			try {
+				setSuccess(true);
 				setError('');
 				setLoading(true);
-				setSuccess(true);
 				await login(emailRef.current.value, passwordRef.current.value);
 				history.push('/profil');
 			} catch {
+				setSuccess(false);
 				setError('Failed to sign in');
 			}
 			setLoading(false);
 		} else if (rememberRef.current.checked) {
 			try {
+				setSuccess(true);
 				setError('');
 				setLoading(true);
 				await rememberedLogin(emailRef.current.value, passwordRef.current.value);
 				history.push('/profil');
 			} catch {
+				setSuccess(false);
 				setError('Failed to sign in');
 			}
 			setLoading(false);

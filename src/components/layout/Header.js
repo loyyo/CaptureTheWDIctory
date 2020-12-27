@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import FlagIcon from '@material-ui/icons/Flag';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -31,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
 	const classes = useStyles();
+	const history = useHistory();
 
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [error, setError] = useState('error');
@@ -42,9 +44,10 @@ const Header = () => {
 		setError('');
 		try {
 			await logout();
+			history.go(0);
 		} catch {
 			setError('Failed to log out');
-			console.log(error);
+			console.error(error);
 		}
 	}
 
@@ -69,16 +72,20 @@ const Header = () => {
 							</Button>
 						</Typography>
 
-						<Button className={classes.menuButton}>
-							<Link className='href' to='/wyzwania'>
-								<FlagIcon />
-							</Link>
-						</Button>
-						<Button>
-							<Link className='href' to='/tabela'>
-								<EqualizerIcon />
-							</Link>
-						</Button>
+						{currentUser !== null && (
+							<>
+								<Button className={classes.menuButton}>
+									<Link className='href' to='/wyzwania'>
+										<FlagIcon />
+									</Link>
+								</Button>
+								<Button>
+									<Link className='href' to='/tabela'>
+										<EqualizerIcon />
+									</Link>
+								</Button>
+							</>
+						)}
 
 						<div className=''>
 							<IconButton

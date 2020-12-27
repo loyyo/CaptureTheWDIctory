@@ -27,23 +27,14 @@
 
 // leaderboard
 
-.leaderboard {
-	text-align: center;
+.leaderboard-header-ranking {
+	width: 100%;
 }
 
-.App-title {
-	font-size: 1.5em;
-}
-
+.leaderboard-header-ranking,
 .leaderboard-header {
 	background-color: #3f51b5;
 	color: white;
-	width: 100%;
-	padding: 15px;
-	margin-top: 20px;
-	font-size: 20px;
-}
-
-.overflow-table {
-	overflow-x: auto;
+	padding: 1rem;
+	text-align: center;
 }

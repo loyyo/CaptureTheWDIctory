@@ -1,25 +1,84 @@
-import React from 'react';
-import Table from '../leaderboard/Table';
+import React, { useEffect } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
 
-const Leaderboard = () => {
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import LinearProgress from '@material-ui/core/LinearProgress';
+
+import Table from '../Table';
+import YourRank from '../YourRank';
+
+const useStyles = makeStyles((theme) => ({
+	paper: {
+		marginTop: theme.spacing(5),
+		marginBottom: theme.spacing(5),
+	},
+}));
+
+export default function Leaderboard() {
+	const classes = useStyles();
+
+	const { getAllUsersData, allUsersData, currentUserData, getProfile } = useAuth();
+
+	useEffect(() => {
+		if (allUsersData.length === 0) {
+			getAllUsersData();
+		}
+		if (!currentUserData) {
+			getProfile();
+		}
+	});
+
+	if (allUsersData.length === 0) {
+		return (
+			<Container component='main' maxWidth='lg'>
+				<CssBaseline />
+				<div className={classes.loading}>
+					<Box m={10}>
+						<LinearProgress />
+					</Box>
+				</div>
+			</Container>
+		);
+	}
+
+	if (!currentUserData) {
+		return (
+			<Container component='main' maxWidth='lg'>
+				<CssBaseline />
+				<div className={classes.loading}>
+					<Box m={10}>
+						<LinearProgress />
+					</Box>
+				</div>
+			</Container>
+		);
+	}
+
 	return (
-		<div className='leaderboard'>
-			<div className='container'>
-				<div className='row'>
-					<div className='col-lg-12'>
-						<div className='leaderboard-header'>Leaderboard</div>
-					</div>
-				</div>
-				<div className='row'>
-					<div className='col-lg-12'>
-						<div className='overflow-table'>
-							<Table />
-						</div>
-					</div>
-				</div>
+		<Container maxWidth='md'>
+			<CssBaseline />
+			<div className={classes.paper}>
+				<Grid container direction='column'>
+					<Grid item xs={12}>
+						<Typography variant='h4' className='leaderboard-header-ranking'>
+							Your Ranking
+						</Typography>
+						<YourRank currentUserData={currentUserData} allUsersData={allUsersData} />
+					</Grid>
+					<Box mt={1} mb={1} />
+					<Grid item xs={12}>
+						<Typography variant='h4' className='leaderboard-header'>
+							Leaderboard
+						</Typography>
+						<Table allUsersData={allUsersData} />
+					</Grid>
+				</Grid>
 			</div>
-		</div>
+		</Container>
 	);
-};
-
-export default Leaderboard;
+}

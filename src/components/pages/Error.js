@@ -34,45 +34,51 @@ export default function Error() {
 		<Container maxWidth='md'>
 			<CssBaseline />
 			<div className={classes.paper}>
-				<Paper variant='outlined' elevation='3'>
-					<Box mb={3} mt={3} mr={5} ml={5}>
-						<Typography variant='h4' gutterBottom>
-							Ups, sorki memorki, ale tu prawdopodobnie nie znajdziesz żadnego klucza CTF...
-							Prawdopodobnie... :-)
-						</Typography>
-					</Box>
-					<Divider variant='middle' />
-					<Grid justify='center' container spacing={5}>
-						<Grid item>
-							<Link to='/rejestracja'>
-								<Button
-									type='button'
-									fullWidth
-									variant='contained'
-									color='primary'
-									size='large'
-									className={classes.button}
-								>
-									SING UP
-								</Button>
-							</Link>
-						</Grid>
-						<Grid item>
-							<Link to='/login'>
-								<Button
-									type='button'
-									fullWidth
-									variant='outlined'
-									color='primary'
-									size='large'
-									className={classes.button}
-								>
-									Sign In
-								</Button>
-							</Link>
-						</Grid>
+				<Grid container>
+					<Grid item xs={1} />
+					<Grid item xs={10}>
+						<Paper variant='outlined' elevation='3'>
+							<Box mb={3} mt={3} mr={5} ml={5}>
+								<Typography variant='h5' gutterBottom>
+									Ups, sorki memorki, ale tu prawdopodobnie nie znajdziesz żadnego klucza CTF...
+									Prawdopodobnie... :-)
+								</Typography>
+							</Box>
+							<Divider variant='middle' />
+							<Grid justify='center' container spacing={2} row>
+								<Grid item>
+									<Link to='/rejestracja'>
+										<Button
+											type='button'
+											fullWidth
+											variant='contained'
+											color='primary'
+											size='large'
+											className={classes.button}
+										>
+											SING UP
+										</Button>
+									</Link>
+								</Grid>
+								<Grid item>
+									<Link to='/login'>
+										<Button
+											type='button'
+											fullWidth
+											variant='outlined'
+											color='primary'
+											size='large'
+											className={classes.button}
+										>
+											Sign In
+										</Button>
+									</Link>
+								</Grid>
+							</Grid>
+							<Grid item xs={1} />
+						</Paper>
 					</Grid>
-				</Paper>
+				</Grid>
 			</div>
 			<Button size='small' onClick={debug}>
 				ok

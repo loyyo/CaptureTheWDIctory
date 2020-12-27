@@ -25,12 +25,8 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: theme.palette.background.paper,
 	},
 	paper: {
-		marginTop: theme.spacing(15),
+		marginTop: theme.spacing(5),
 		marginBottom: theme.spacing(5),
-
-		// display: 'flex',
-		// flexDirection: 'column',
-		// alignItems: 'center',
 	},
 	button: {
 		margin: theme.spacing(0.5, 0, 0.5),
@@ -50,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function Error() {
+export default function Profile() {
 	const classes = useStyles();
 	const { getProfile, currentUserData } = useAuth();
 
@@ -77,7 +73,7 @@ export default function Error() {
 		<Container maxWidth='lg'>
 			<CssBaseline />
 			<div className={classes.paper}>
-				<Paper variant='outlined' elevation='3'>
+				<Paper variant='' elevation='6'>
 					<Grid container>
 						<Grid item lg={3}>
 							<Box m={2} mb={2} mr={3}>
@@ -138,9 +134,6 @@ export default function Error() {
 							<Box m={2} mb={2} ml={3}>
 								<Paper variant='outlined' elevation='3'>
 									<Box mb={1} mt={1}>
-										<Typography align='center' display='block' variant='h5'>
-											Rank: {currentUserData.rank}
-										</Typography>
 										<Typography align='center' display='block' variant='h5'>
 											Points: {currentUserData.points}
 										</Typography>
@@ -205,7 +198,7 @@ export default function Error() {
 														</ListItemIcon>
 														<ListItemText id='challenge4' primary={`Challenge nr 4`} />
 													</ListItem>
-													<ListItem className={classes.listitem} button>
+													<ListItem className={classes.listitem} divider button>
 														<ListItemIcon>
 															<Checkbox
 																className={classes.checkbox}
@@ -217,6 +210,19 @@ export default function Error() {
 															/>
 														</ListItemIcon>
 														<ListItemText id='challenge5' primary={`Challenge nr 5`} />
+													</ListItem>
+													<ListItem className={classes.listitem} button>
+														<ListItemIcon>
+															<Checkbox
+																className={classes.checkbox}
+																edge='start'
+																checked={currentUserData.challenges.challenge6}
+																disableRipple
+																color='primary'
+																disabled
+															/>
+														</ListItemIcon>
+														<ListItemText id='challenge6' primary={`Challenge nr 6`} />
 													</ListItem>
 												</List>
 											</Box>

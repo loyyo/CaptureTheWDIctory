@@ -24,13 +24,13 @@ function App() {
 				<Header />
 				<Switch>
 					<Route exact path='/' component={Home} />
-					<Route exact path='/wyzwania' component={AllChallenges} />
+					<PrivateRoute exact path='/wyzwania' component={AllChallenges} />
 					<PrivateRoute exact path='/profil' component={Profile} />
+					<PrivateRoute exact path='/tabela' component={Leaderboard} />
+					<PrivateRoute exact path='/profil/edytuj' component={EditProfile} />
+					<PrivateRoute exact path='/wyzwanie' component={Challenge} />
 					<LoggedInRoute exact path='/login' component={Login} />
 					<LoggedInRoute exact path='/rejestracja' component={Register} />
-					<Route exact path='/tabela' component={Leaderboard} />
-					<PrivateRoute exact path='/profil/edytuj' component={EditProfile} />
-					<Route exact path='/wyzwanie' component={Challenge} />
 					<LoggedInRoute exact path='/reset-hasla' component={ForgotPassword} />
 					<Route component={Error} />
 				</Switch>

@@ -19,6 +19,7 @@ export function AuthProvider({ children }) {
 	const [currentUser, setCurrentUser] = useState();
 	const [loading, setLoading] = useState(true);
 	const [currentUserData, setCurrentUserData] = useState();
+	const [allUsersData, setAllUsersData] = useState([]);
 
 	function signup(email, password) {
 		return auth.createUserWithEmailAndPassword(email, password);
@@ -35,7 +36,7 @@ export function AuthProvider({ children }) {
 				return auth.signInWithEmailAndPassword(email, password);
 			})
 			.catch((err) => {
-				console.err(err);
+				console.error(err);
 			});
 	}
 
@@ -69,11 +70,11 @@ export function AuthProvider({ children }) {
 					challenge3: false,
 					challenge4: false,
 					challenge5: false,
+					challenge6: false,
 				},
 				createdAt: new Date(),
 				email: email,
 				points: 0,
-				rank: 1000,
 				username: username,
 			})
 			.catch((error) => {
@@ -82,15 +83,40 @@ export function AuthProvider({ children }) {
 	}
 
 	function getProfile() {
-		db.collection('users')
+		return db
+			.collection('users')
+			.doc(currentUser.email)
+			.get()
+			.then((doc) => {
+				if (doc.exists) {
+					var Data = doc.data();
+					setCurrentUserData(Data);
+				} else {
+					console.error('No such document!');
+				}
+			})
+			.catch(function (error) {
+				console.error('Error getting document:', error);
+			});
+	}
+
+	function getAllUsersData() {
+		var Data = [];
+
+		return db
+			.collection('users')
+			.orderBy('points', 'desc')
 			.get()
 			.then((querySnapshot) => {
 				querySnapshot.forEach((doc) => {
-					if (doc.id === currentUser.email) {
-						var Data = doc.data();
-						setCurrentUserData(Data);
-					}
+					Data.push(doc.data());
 				});
+			})
+			.then(() => {
+				setAllUsersData(Data);
+			})
+			.catch(function (error) {
+				console.error('Error getting documents:', error);
 			});
 	}
 
@@ -153,6 +179,7 @@ export function AuthProvider({ children }) {
 	const value = {
 		currentUser,
 		currentUserData,
+		allUsersData,
 		login,
 		logout,
 		signup,
@@ -165,6 +192,7 @@ export function AuthProvider({ children }) {
 		updateUsername,
 		updateBio,
 		updateAvatar,
+		getAllUsersData,
 	};
 
 	return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
