@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,6 +15,8 @@ import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import { DropzoneArea } from 'material-ui-dropzone';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -34,22 +36,42 @@ const useStyles = makeStyles((theme) => ({
 	submit: {
 		margin: theme.spacing(3, 0, 2),
 	},
+	loading: {
+		width: '100%',
+	},
 }));
 
 export default function EditProfile() {
 	const classes = useStyles();
 
-	// const firstNameRef = useRef();
-	// const lastNameRef = useRef();
 	const emailRef = useRef();
+	const bioRef = useRef();
+	const usernameRef = useRef();
 	const passwordRef = useRef();
 	const passwordConfirmationRef = useRef();
 
-	const { currentUser, updateEmail, updatePassword } = useAuth();
+	const {
+		currentUser,
+		updateEmail,
+		updatePassword,
+		currentUserData,
+		getProfile,
+		updateUsername,
+		updateBio,
+		updateAvatar,
+	} = useAuth();
 
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
+	const [file, setFile] = useState([]);
+
+	const regex = `^[0-9A-Za-z]{5,15}$`;
+	const bioregex = `^[\\x00-\\x7F]{1,100}$`;
+
+	const handleChange = (e) => {
+		setFile(e);
+	};
 
 	function handleSubmit(e) {
 		e.preventDefault();
@@ -58,11 +80,23 @@ export default function EditProfile() {
 		}
 
 		const promises = [];
+		if (passwordRef.current.value) {
+			promises.push(updatePassword(passwordRef.current.value));
+		}
 		if (emailRef.current.value !== currentUser.email) {
 			promises.push(updateEmail(emailRef.current.value));
 		}
-		if (passwordRef.current.value) {
-			promises.push(updatePassword(passwordRef.current.value));
+		if (emailRef.current.value === currentUser.email) {
+			if (usernameRef.current.value !== currentUserData.username) {
+				promises.push(updateUsername(emailRef.current.value, usernameRef.current.value));
+			}
+			if (bioRef.current.value !== currentUserData.bio) {
+				promises.push(updateBio(emailRef.current.value, bioRef.current.value));
+			}
+			if (file.length !== 0) {
+				var transfer = file[0];
+				promises.push(updateAvatar(emailRef.current.value, transfer));
+			}
 		}
 
 		setLoading(true);
@@ -87,8 +121,27 @@ export default function EditProfile() {
 			});
 	}
 
+	useEffect(() => {
+		if (!currentUserData) {
+			getProfile();
+		}
+	});
+
+	if (!currentUserData) {
+		return (
+			<Container component='main' maxWidth='lg'>
+				<CssBaseline />
+				<div className={classes.loading}>
+					<Box m={10}>
+						<LinearProgress />
+					</Box>
+				</div>
+			</Container>
+		);
+	}
+
 	return (
-		<Container component='main' maxWidth='xs'>
+		<Container component='main' maxWidth='lg'>
 			<CssBaseline />
 			<div className={classes.paper}>
 				<Avatar className={classes.avatar}>
@@ -131,67 +184,91 @@ export default function EditProfile() {
 							</Collapse>
 						</Box>
 					)}
-					<Grid container spacing={2}>
-						{/* <Grid item xs={12} sm={6}>
-							<TextField
-								autoComplete='fname'
-								name='firstName'
-								variant='outlined'
-								fullWidth
-								id='firstName'
-								label='First Name'
-								autoFocus
-								inputRef={firstNameRef}
-							/>
+					<Grid container spacing={0}>
+						<Grid container spacing={2} md={6}>
+							<Grid item md={11} xs={12}>
+								<TextField
+									className='textfield'
+									variant='outlined'
+									fullWidth
+									id='username'
+									label='Username'
+									name='username'
+									autoComplete='username'
+									inputRef={usernameRef}
+									defaultValue={currentUserData.username}
+									inputProps={{ pattern: regex, title: 'Użyj od 5 do 15 znaków' }}
+								/>
+							</Grid>
+							<Grid item md={11} xs={12}>
+								<TextField
+									className='textfield'
+									variant='outlined'
+									fullWidth
+									id='email'
+									label='Email Address'
+									name='email'
+									autoComplete='email'
+									inputRef={emailRef}
+									defaultValue={currentUser.email}
+								/>
+							</Grid>
+							<Grid item md={11} xs={12}>
+								<TextField
+									className='textfield'
+									variant='outlined'
+									fullWidth
+									name='password'
+									label='Password'
+									type='password'
+									id='password'
+									autoComplete='current-password'
+									inputRef={passwordRef}
+									helperText='*Leave blank to keep the same'
+								/>
+							</Grid>
+							<Grid item md={11} xs={12}>
+								<TextField
+									className='textfield'
+									variant='outlined'
+									fullWidth
+									name='passwordConfirmation'
+									label='Password Confirmation'
+									type='password'
+									id='passwordConfirmation'
+									autoComplete='current-password'
+									inputRef={passwordConfirmationRef}
+									helperText='*Leave blank to keep the same'
+								/>
+							</Grid>
 						</Grid>
-						<Grid item xs={12} sm={6}>
-							<TextField
-								variant='outlined'
-								fullWidth
-								id='lastName'
-								label='Last Name'
-								name='lastName'
-								autoComplete='lname'
-								inputRef={lastNameRef}
-							/>
-						</Grid> */}
-						<Grid item xs={12}>
-							<TextField
-								variant='outlined'
-								fullWidth
-								id='email'
-								label='Email Address'
-								name='email'
-								autoComplete='email'
-								inputRef={emailRef}
-								defaultValue={currentUser.email}
-							/>
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								variant='outlined'
-								fullWidth
-								name='password'
-								label='Password'
-								type='password'
-								id='password'
-								autoComplete='current-password'
-								inputRef={passwordRef}
-								helperText='*Leave blank to keep the same'
-							/>
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								variant='outlined'
-								fullWidth
-								name='passwordConfirmation'
-								label='Password Confirmation'
-								type='password'
-								id='passwordConfirmation'
-								autoComplete='current-password'
-								inputRef={passwordConfirmationRef}
-								helperText='*Leave blank to keep the same'
-							/>
+						<Grid container spacing={2} md={6}>
+							<Grid item xs={12}>
+								<TextField
+									className='textfield'
+									variant='outlined'
+									fullWidth
+									id='biography'
+									label='Biography'
+									name='biography'
+									inputRef={bioRef}
+									defaultValue={currentUserData.bio}
+									inputProps={{ pattern: bioregex, title: 'Użyj maksymalnie 100 znaków' }}
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<DropzoneArea
+									maxFileSize={5000000}
+									filesLimit={1}
+									onChange={handleChange}
+									dropzoneText={
+										'Drag and drop an image here (or click) to update your avatar (resized to 150x150 automatically)'
+									}
+									acceptedFiles={['image/jpeg', 'image/jpg', 'image/gif', 'image/png']}
+									id='avatar'
+									name='avatar'
+								/>
+							</Grid>
 						</Grid>
 					</Grid>
 					<Button

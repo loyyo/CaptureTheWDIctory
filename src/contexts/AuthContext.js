@@ -1,6 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { auth } from '../firebase';
 import firebase from 'firebase/app';
+import app from '../firebase';
+import 'firebase/firestore';
+import 'firebase/storage';
+import cryptoRandomString from 'crypto-random-string';
+
+const db = app.firestore();
+const storageRef = app.storage().ref();
 
 const AuthContext = React.createContext();
 
@@ -11,6 +18,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
 	const [currentUser, setCurrentUser] = useState();
 	const [loading, setLoading] = useState(true);
+	const [currentUserData, setCurrentUserData] = useState();
 
 	function signup(email, password) {
 		return auth.createUserWithEmailAndPassword(email, password);
@@ -47,17 +55,104 @@ export function AuthProvider({ children }) {
 		return currentUser.updatePassword(password);
 	}
 
+	function createProfile(username, email) {
+		return db
+			.collection('users')
+			.doc(`${email}`)
+			.set({
+				avatar:
+					'https://firebasestorage.googleapis.com/v0/b/capturethewdictory.appspot.com/o/avatars%2F0wli9hCJ8mTJbvj.png?alt=media',
+				bio: 'There is nothing to see here unfortunately :(',
+				challenges: {
+					challenge1: false,
+					challenge2: false,
+					challenge3: false,
+					challenge4: false,
+					challenge5: false,
+				},
+				createdAt: new Date(),
+				email: email,
+				points: 0,
+				rank: 1000,
+				username: username,
+			})
+			.catch((error) => {
+				console.error('Error adding document: ', error);
+			});
+	}
+
+	function getProfile() {
+		db.collection('users')
+			.get()
+			.then((querySnapshot) => {
+				querySnapshot.forEach((doc) => {
+					if (doc.id === currentUser.email) {
+						var Data = doc.data();
+						setCurrentUserData(Data);
+					}
+				});
+			});
+	}
+
+	function updateUsername(email, username) {
+		return db
+			.collection('users')
+			.doc(`${email}`)
+			.update({
+				username: username,
+			})
+			.catch((error) => {
+				console.error('Error updating document: ', error);
+			});
+	}
+
+	function updateBio(email, bio) {
+		return db
+			.collection('users')
+			.doc(`${email}`)
+			.update({
+				bio: bio,
+			})
+			.catch((error) => {
+				console.error('Error updating document: ', error);
+			});
+	}
+
+	function updateAvatar(email, file) {
+		var filename = cryptoRandomString({ length: 20, type: 'alphanumeric' });
+		var filetype = file.type.slice(6);
+		var fullfilename = `${filename}.${filetype}`;
+
+		var metadata = {
+			contentType: file.type,
+		};
+
+		storageRef.child('avatars/' + fullfilename).put(file, metadata);
+
+		var avatar = `https://firebasestorage.googleapis.com/v0/b/capturethewdictory.appspot.com/o/avatars%2F${fullfilename}?alt=media`;
+
+		return db
+			.collection('users')
+			.doc(`${email}`)
+			.update({
+				avatar: avatar,
+			})
+			.catch((error) => {
+				console.error('Error updating document: ', error);
+			});
+	}
+
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((user) => {
 			setCurrentUser(user);
 			setLoading(false);
 		});
-
 		return unsubscribe;
 	}, []);
 
 	const value = {
 		currentUser,
+		currentUserData,
 		login,
 		logout,
 		signup,
@@ -65,6 +160,11 @@ export function AuthProvider({ children }) {
 		updatePassword,
 		updateEmail,
 		rememberedLogin,
+		createProfile,
+		getProfile,
+		updateUsername,
+		updateBio,
+		updateAvatar,
 	};
 
 	return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;

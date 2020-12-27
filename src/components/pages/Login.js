@@ -8,6 +8,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -48,6 +51,7 @@ export default function SignIn() {
 
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [success, setSuccess] = useState(false);
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -56,6 +60,7 @@ export default function SignIn() {
 			try {
 				setError('');
 				setLoading(true);
+				setSuccess(true);
 				await login(emailRef.current.value, passwordRef.current.value);
 				history.push('/profil');
 			} catch {
@@ -94,7 +99,33 @@ export default function SignIn() {
 							</Alert>
 						</Box>
 					)}
+					{success && (
+						<Box mt={-1} mb={2}>
+							<Collapse in={success}>
+								<Alert
+									variant='outlined'
+									severity='success'
+									action={
+										<IconButton
+											aria-label='close'
+											color='inherit'
+											size='small'
+											onClick={() => {
+												setSuccess(false);
+											}}
+										>
+											<CloseIcon fontSize='inherit' />
+										</IconButton>
+									}
+								>
+									<AlertTitle>Success!</AlertTitle>
+									You have changed been logged in. Redirecting...
+								</Alert>
+							</Collapse>
+						</Box>
+					)}
 					<TextField
+						className='textfield'
 						variant='outlined'
 						margin='normal'
 						required
@@ -107,6 +138,7 @@ export default function SignIn() {
 						inputRef={emailRef}
 					/>
 					<TextField
+						className='textfield'
 						variant='outlined'
 						margin='normal'
 						required

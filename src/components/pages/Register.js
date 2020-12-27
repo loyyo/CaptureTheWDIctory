@@ -6,6 +6,9 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -38,16 +41,18 @@ export default function SignUp() {
 	const classes = useStyles();
 	const history = useHistory();
 
-	// const firstNameRef = useRef();
-	// const lastNameRef = useRef();
+	const usernameRef = useRef();
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	const passwordConfirmationRef = useRef();
 
-	const { signup } = useAuth();
+	const { signup, createProfile } = useAuth();
 
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [success, setSuccess] = useState(false);
+
+	const regex = `^[0-9A-Za-z!@.;:'"?-]{5,15}$`;
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -59,6 +64,8 @@ export default function SignUp() {
 		try {
 			setError('');
 			setLoading(true);
+			setSuccess(true);
+			await createProfile(usernameRef.current.value, emailRef.current.value);
 			await signup(emailRef.current.value, passwordRef.current.value);
 			history.push('/profil');
 		} catch {
@@ -86,34 +93,49 @@ export default function SignUp() {
 							</Alert>
 						</Box>
 					)}
+					{success && (
+						<Box mt={-1} mb={2}>
+							<Collapse in={success}>
+								<Alert
+									variant='outlined'
+									severity='success'
+									action={
+										<IconButton
+											aria-label='close'
+											color='inherit'
+											size='small'
+											onClick={() => {
+												setSuccess(false);
+											}}
+										>
+											<CloseIcon fontSize='inherit' />
+										</IconButton>
+									}
+								>
+									<AlertTitle>Success!</AlertTitle>
+									You have created your profile. Redirecting...
+								</Alert>
+							</Collapse>
+						</Box>
+					)}
 					<Grid container spacing={2}>
-						{/* <Grid item xs={12} sm={6}>
-							<TextField
-								autoComplete='fname'
-								name='firstName'
-								variant='outlined'
-								required
-								fullWidth
-								id='firstName'
-								label='First Name'
-								autoFocus
-								inputRef={firstNameRef}
-							/>
-						</Grid>
-						<Grid item xs={12} sm={6}>
-							<TextField
-								variant='outlined'
-								required
-								fullWidth
-								id='lastName'
-								label='Last Name'
-								name='lastName'
-								autoComplete='lname'
-								inputRef={lastNameRef}
-							/>
-						</Grid> */}
 						<Grid item xs={12}>
 							<TextField
+								className='textfield'
+								variant='outlined'
+								required
+								fullWidth
+								id='username'
+								label='Username'
+								name='username'
+								autoComplete='username'
+								inputRef={usernameRef}
+								inputProps={{ pattern: regex, title: 'Użyj od 5 do 15 znaków' }}
+							/>
+						</Grid>
+						<Grid item xs={12}>
+							<TextField
+								className='textfield'
 								variant='outlined'
 								required
 								fullWidth
@@ -126,6 +148,7 @@ export default function SignUp() {
 						</Grid>
 						<Grid item xs={12}>
 							<TextField
+								className='textfield'
 								variant='outlined'
 								required
 								fullWidth
@@ -139,6 +162,7 @@ export default function SignUp() {
 						</Grid>
 						<Grid item xs={12}>
 							<TextField
+								className='textfield'
 								variant='outlined'
 								required
 								fullWidth

@@ -106,6 +106,7 @@ export default function ForgotPassword() {
 						</Box>
 					)}
 					<TextField
+						className='textfield'
 						variant='outlined'
 						margin='normal'
 						required
