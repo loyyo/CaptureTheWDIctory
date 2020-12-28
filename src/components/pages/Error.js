@@ -47,7 +47,7 @@ export default function Error() {
 							<Divider variant='middle' />
 							<Grid justify='center' container spacing={2} row>
 								<Grid item>
-									<Link to='/rejestracja'>
+									<Link to='/register'>
 										<Button
 											type='button'
 											fullWidth

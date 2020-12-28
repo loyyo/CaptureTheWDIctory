@@ -75,6 +75,11 @@ export default function Profile() {
 			<div className={classes.paper}>
 				<Paper variant='' elevation='6'>
 					<Grid container>
+						<Grid item xs={12}>
+							<Typography variant='h4' className='leaderboard-header'>
+								Your Profile
+							</Typography>
+						</Grid>
 						<Grid item lg={3}>
 							<Box m={2} mb={2} mr={3}>
 								<Paper variant='outlined' elevation='3'>
@@ -115,7 +120,7 @@ export default function Profile() {
 										</Paper>
 									</Box>
 									<Box m={1} mr={3} ml={3} mt={-1}>
-										<Link style={{ textDecoration: 'none' }} to='/profil/edytuj'>
+										<Link style={{ textDecoration: 'none' }} to='/profile/settings'>
 											<Button
 												type='button'
 												fullWidth

@@ -9,6 +9,10 @@
 	background-color: white;
 }
 
+.App-leaderboard {
+	overflow-x: hidden;
+}
+
 // Link
 
 .href {
@@ -27,14 +31,31 @@
 
 // leaderboard
 
-.leaderboard-header-ranking {
-	width: 100%;
-}
-
-.leaderboard-header-ranking,
+.leaderboard-light-right,
+.leaderboard-light,
 .leaderboard-header {
 	background-color: #3f51b5;
 	color: white;
 	padding: 1rem;
 	text-align: center;
+}
+
+.leaderboard-light-right,
+.leaderboard-light {
+	background-color: #7986cb;
+	border-color: white;
+	border: solid;
+	border-left: none;
+	border-width: 0.01rem;
+	height: 100%;
+}
+
+.leaderboard-light-right {
+	border-right: none;
+}
+
+@media only screen and (max-width: 600px) {
+	.leaderboard-light {
+		border-right: none;
+	}
 }

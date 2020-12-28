@@ -147,9 +147,13 @@ export default function EditProfile() {
 				<Avatar className={classes.avatar}>
 					<SettingsIcon />
 				</Avatar>
-				<Typography component='h1' variant='h5'>
-					Edit Profile
-				</Typography>
+				<Grid container>
+					<Grid item xs={12}>
+						<Typography variant='h4' className='leaderboard-header'>
+							Settings
+						</Typography>
+					</Grid>
+				</Grid>
 				<form onSubmit={handleSubmit} className={classes.form}>
 					{error && (
 						<Box mt={-1} mb={2}>
@@ -276,14 +280,15 @@ export default function EditProfile() {
 						fullWidth
 						variant='contained'
 						color='primary'
+						size='large'
 						className={classes.submit}
 						disabled={loading}
 					>
-						Edit Profile
+						Save
 					</Button>
 					<Grid container justify='center'>
 						<Grid item>
-							<Link to='/profil'>Cancel</Link>
+							<Link to='/profile'>Cancel</Link>
 						</Grid>
 					</Grid>
 				</form>

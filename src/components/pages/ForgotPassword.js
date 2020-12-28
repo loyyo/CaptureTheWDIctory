@@ -133,7 +133,7 @@ export default function ForgotPassword() {
 							<Link to='/login'>Sign In</Link>
 						</Grid>
 						<Grid item>
-							<Link to='/rejestracja'>{"Don't have an account? Sign Up"}</Link>
+							<Link to='/register'>{"Don't have an account? Sign Up"}</Link>
 						</Grid>
 					</Grid>
 				</form>

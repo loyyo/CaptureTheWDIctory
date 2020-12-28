@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 		height: theme.spacing(5),
 	},
 	button: {
-		width: '40vw',
+		width: '100%',
 		height: theme.spacing(10),
 		fontSize: theme.spacing(2),
 	},
@@ -125,7 +125,7 @@ export default function YourRank({ allUsersData, currentUserData }) {
 						<Button
 							style={{ textDecoration: 'none' }}
 							onClick={() => {
-								history.push('/wyzwania');
+								history.push('/challenges');
 							}}
 							color='primary'
 							variant='contained'

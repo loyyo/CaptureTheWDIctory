@@ -23,9 +23,9 @@ const Footer = () => {
 	const history = useHistory();
 
 	useEffect(() => {
-		if (history.location.pathname !== '/wyzwania') {
-			if (history.location.pathname !== '/tabela') {
-				if (history.location.pathname !== '/profil') {
+		if (history.location.pathname !== '/challenges') {
+			if (history.location.pathname !== '/leaderboard') {
+				if (history.location.pathname !== '/profile') {
 					setValue(null);
 				}
 			}
@@ -45,21 +45,21 @@ const Footer = () => {
 				>
 					<BottomNavigationAction
 						onClick={() => {
-							history.push('/wyzwania');
+							history.push('/challenges');
 						}}
 						label='Challenges'
 						icon={<FlagIcon />}
 					/>
 					<BottomNavigationAction
 						onClick={() => {
-							history.push('/tabela');
+							history.push('/leaderboard');
 						}}
 						label='Leaderboard'
 						icon={<EqualizerIcon />}
 					/>
 					<BottomNavigationAction
 						onClick={() => {
-							history.push('/profil');
+							history.push('/profile');
 						}}
 						label='Profile'
 						icon={<PersonIcon />}

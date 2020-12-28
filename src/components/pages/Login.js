@@ -58,29 +58,30 @@ export default function SignIn() {
 
 		if (!rememberRef.current.checked) {
 			try {
-				setSuccess(true);
-				setError('');
 				setLoading(true);
+				setError('');
 				await login(emailRef.current.value, passwordRef.current.value);
-				history.push('/profil');
+				setSuccess(true);
+				history.push('/profile');
 			} catch {
+				passwordRef.current.value = '';
 				setSuccess(false);
 				setError('Failed to sign in');
 			}
-			setLoading(false);
 		} else if (rememberRef.current.checked) {
 			try {
-				setSuccess(true);
-				setError('');
 				setLoading(true);
+				setError('');
 				await rememberedLogin(emailRef.current.value, passwordRef.current.value);
-				history.push('/profil');
+				setSuccess(true);
+				history.push('/profile');
 			} catch {
+				passwordRef.current.value = '';
 				setSuccess(false);
 				setError('Failed to sign in');
 			}
-			setLoading(false);
 		}
+		setLoading(false);
 	}
 
 	return (
@@ -171,10 +172,10 @@ export default function SignIn() {
 					</Button>
 					<Grid container>
 						<Grid item xs>
-							<Link to='/reset-hasla'>Forgot password?</Link>
+							<Link to='/reset-password'>Forgot password?</Link>
 						</Grid>
 						<Grid item>
-							<Link to='/rejestracja'>{"Don't have an account? Sign Up"}</Link>
+							<Link to='/register'>{"Don't have an account? Sign Up"}</Link>
 						</Grid>
 					</Grid>
 				</form>

@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
 	title: {
 		flexGrow: 1,
 	},
+	icon: {
+		color: 'white',
+	},
 }));
 
 const Header = () => {
@@ -75,13 +78,13 @@ const Header = () => {
 						{currentUser !== null && (
 							<>
 								<Button className={classes.menuButton}>
-									<Link className='href' to='/wyzwania'>
-										<FlagIcon />
+									<Link className='href' to='/challenges'>
+										<FlagIcon className={classes.icon} />
 									</Link>
 								</Button>
 								<Button>
-									<Link className='href' to='/tabela'>
-										<EqualizerIcon />
+									<Link className='href' to='/leaderboard'>
+										<EqualizerIcon className={classes.icon} />
 									</Link>
 								</Button>
 							</>
@@ -95,7 +98,7 @@ const Header = () => {
 								onClick={handleMenu}
 								color='inherit'
 							>
-								<AccountCircle />
+								<AccountCircle className={classes.icon} />
 							</IconButton>
 							<Menu
 								id='menu-appbar'
@@ -120,7 +123,7 @@ const Header = () => {
 											</Link>
 										</MenuItem>
 										<MenuItem onClick={handleClose}>
-											<Link className='href-black' to='/rejestracja'>
+											<Link className='href-black' to='/register'>
 												Sign Up
 											</Link>
 										</MenuItem>
@@ -129,12 +132,12 @@ const Header = () => {
 								{currentUser !== null && (
 									<>
 										<MenuItem onClick={handleClose}>
-											<Link className='href-black' to='/profil'>
+											<Link className='href-black' to='/profile'>
 												Profile
 											</Link>
 										</MenuItem>
 										<MenuItem onClick={handleClose}>
-											<Link className='href-black' to='/profil/edytuj'>
+											<Link className='href-black' to='/profile/settings'>
 												Settings
 											</Link>
 										</MenuItem>

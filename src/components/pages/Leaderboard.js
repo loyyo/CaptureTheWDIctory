@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: theme.spacing(5),
 		marginBottom: theme.spacing(5),
 	},
+	loading: {
+		width: '100%',
+	},
 }));
 
 export default function Leaderboard() {
@@ -65,7 +68,7 @@ export default function Leaderboard() {
 			<div className={classes.paper}>
 				<Grid container direction='column'>
 					<Grid item xs={12}>
-						<Typography variant='h4' className='leaderboard-header-ranking'>
+						<Typography variant='h4' className='leaderboard-header'>
 							Your Ranking
 						</Typography>
 						<YourRank currentUserData={currentUserData} allUsersData={allUsersData} />

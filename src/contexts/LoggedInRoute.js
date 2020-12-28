@@ -9,7 +9,7 @@ const LoggedInRoute = ({ component: Component, ...rest }) => {
 		<Route
 			{...rest}
 			render={(props) => {
-				return !currentUser ? <Component {...props} /> : <Redirect to='/profil' />;
+				return !currentUser ? <Component {...props} /> : <Redirect to='/profile' />;
 			}}
 		></Route>
 	);

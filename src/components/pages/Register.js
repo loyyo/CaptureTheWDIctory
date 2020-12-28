@@ -46,7 +46,7 @@ export default function SignUp() {
 	const passwordRef = useRef();
 	const passwordConfirmationRef = useRef();
 
-	const { signup, createProfile } = useAuth();
+	const { signup } = useAuth();
 
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -64,11 +64,13 @@ export default function SignUp() {
 		try {
 			setError('');
 			setLoading(true);
+			usernameRef.current.value.slice(0, 15);
+			await signup(emailRef.current.value, passwordRef.current.value, usernameRef.current.value);
 			setSuccess(true);
-			await createProfile(usernameRef.current.value, emailRef.current.value);
-			await signup(emailRef.current.value, passwordRef.current.value);
-			history.push('/profil');
+			history.push('/profile');
 		} catch {
+			passwordRef.current.value = '';
+			passwordConfirmationRef.current.value = '';
 			setError('Failed to create an account');
 		}
 		setLoading(false);

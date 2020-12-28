@@ -49,7 +49,7 @@ export default function Home() {
 							<Box mt={1}>
 								<Grid justify='center' container spacing={5}>
 									<Grid item>
-										<Link to='/rejestracja'>
+										<Link to='/register'>
 											<Button
 												type='button'
 												fullWidth

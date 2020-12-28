@@ -1,11 +1,9 @@
 import React from 'react';
 
-const Challenge = () => {
+export default function challenge1() {
 	return (
 		<div>
 			<div className=''></div>
 		</div>
 	);
-};
-
-export default Challenge;
+}

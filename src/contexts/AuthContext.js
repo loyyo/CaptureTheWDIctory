@@ -20,9 +20,12 @@ export function AuthProvider({ children }) {
 	const [loading, setLoading] = useState(true);
 	const [currentUserData, setCurrentUserData] = useState();
 	const [allUsersData, setAllUsersData] = useState([]);
+	const [allChallengesData, setAllChallengesData] = useState([]);
 
-	function signup(email, password) {
-		return auth.createUserWithEmailAndPassword(email, password);
+	function signup(email, password, username) {
+		return auth.createUserWithEmailAndPassword(email, password).then(() => {
+			createProfile(username, email);
+		});
 	}
 
 	function login(email, password) {
@@ -30,10 +33,10 @@ export function AuthProvider({ children }) {
 	}
 
 	function rememberedLogin(email, password) {
-		auth
+		return auth
 			.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
 			.then(() => {
-				return auth.signInWithEmailAndPassword(email, password);
+				auth.signInWithEmailAndPassword(email, password);
 			})
 			.catch((err) => {
 				console.error(err);
@@ -106,6 +109,7 @@ export function AuthProvider({ children }) {
 		return db
 			.collection('users')
 			.orderBy('points', 'desc')
+			.limit(1000)
 			.get()
 			.then((querySnapshot) => {
 				querySnapshot.forEach((doc) => {
@@ -114,6 +118,25 @@ export function AuthProvider({ children }) {
 			})
 			.then(() => {
 				setAllUsersData(Data);
+			})
+			.catch(function (error) {
+				console.error('Error getting documents:', error);
+			});
+	}
+
+	function getAllChallengesData() {
+		var Data = [];
+
+		return db
+			.collection('challenges')
+			.get()
+			.then((querySnapshot) => {
+				querySnapshot.forEach((doc) => {
+					Data.push(doc.data());
+				});
+			})
+			.then(() => {
+				setAllChallengesData(Data);
 			})
 			.catch(function (error) {
 				console.error('Error getting documents:', error);
@@ -180,6 +203,7 @@ export function AuthProvider({ children }) {
 		currentUser,
 		currentUserData,
 		allUsersData,
+		allChallengesData,
 		login,
 		logout,
 		signup,
@@ -193,6 +217,7 @@ export function AuthProvider({ children }) {
 		updateBio,
 		updateAvatar,
 		getAllUsersData,
+		getAllChallengesData,
 	};
 
 	return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
