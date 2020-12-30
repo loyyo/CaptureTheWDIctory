@@ -41,7 +41,7 @@ const Header = () => {
 	const [error, setError] = useState('error');
 	const open = Boolean(anchorEl);
 
-	const { currentUser, logout } = useAuth();
+	const { darkMode, switchDarkMode, currentUser, logout } = useAuth();
 
 	async function handleLogout() {
 		setError('');
@@ -60,6 +60,10 @@ const Header = () => {
 
 	const handleClose = () => {
 		setAnchorEl(null);
+	};
+
+	const handleDarkMode = () => {
+		switchDarkMode();
 	};
 
 	return (
@@ -118,34 +122,41 @@ const Header = () => {
 								{currentUser === null && (
 									<>
 										<MenuItem onClick={handleClose}>
-											<Link className='href-black' to='/login'>
+											<Link className={darkMode === 'true' ? 'href' : 'href-black'} to='/login'>
 												Login
 											</Link>
 										</MenuItem>
 										<MenuItem onClick={handleClose}>
-											<Link className='href-black' to='/register'>
+											<Link className={darkMode === 'true' ? 'href' : 'href-black'} to='/register'>
 												Sign Up
 											</Link>
 										</MenuItem>
+										<MenuItem onClick={handleDarkMode}>Dark Mode</MenuItem>
 									</>
 								)}
 								{currentUser !== null && (
 									<>
 										<MenuItem onClick={handleClose}>
-											<Link className='href-black' to='/profile'>
+											<Link className={darkMode === 'true' ? 'href' : 'href-black'} to='/profile'>
 												Profile
 											</Link>
 										</MenuItem>
 										<MenuItem onClick={handleClose}>
-											<Link className='href-black' to='/profile/settings'>
+											<Link
+												className={darkMode === 'true' ? 'href' : 'href-black'}
+												to='/profile/settings'
+											>
 												Settings
 											</Link>
 										</MenuItem>
-										<MenuItem onClick={handleClose}>
-											<Link onClick={handleLogout} className='href-black' to='/'>
-												Logout
-											</Link>
-										</MenuItem>
+										<MenuItem onClick={handleDarkMode}>Dark Mode</MenuItem>
+										<Link
+											onClick={handleLogout}
+											className={darkMode === 'true' ? 'href' : 'href-black'}
+											to='/'
+										>
+											<MenuItem onClick={handleClose}>Logout</MenuItem>
+										</Link>
 									</>
 								)}
 							</Menu>

@@ -50,7 +50,7 @@ export default function Leaderboard() {
 	}
 
 	return (
-		<Container maxWidth='md'>
+		<Container maxWidth='lg'>
 			<CssBaseline />
 			<div className={classes.paper}>
 				<Grid container direction='column'>

@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { auth } from '../firebase';
-import firebase from 'firebase/app';
 import app from '../firebase';
 import 'firebase/firestore';
 import 'firebase/storage';
@@ -16,12 +15,24 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
+	const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode'));
 	const [currentUser, setCurrentUser] = useState();
 	const [loading, setLoading] = useState(true);
 	const [currentUserData, setCurrentUserData] = useState();
 	const [allUsersData, setAllUsersData] = useState([]);
 	const [allChallengesData, setAllChallengesData] = useState([]);
 	const [singleChallengeData, setSingleChallengeData] = useState([]);
+
+	function switchDarkMode() {
+		var XD = localStorage.getItem('darkMode');
+		if (XD === 'true') {
+			localStorage.setItem('darkMode', 'false');
+			setDarkMode('false');
+		} else if (XD === 'false') {
+			localStorage.setItem('darkMode', 'true');
+			setDarkMode('true');
+		}
+	}
 
 	function signup(email, password, username) {
 		return auth.createUserWithEmailAndPassword(email, password).then(() => {
@@ -233,14 +244,15 @@ export function AuthProvider({ children }) {
 		allUsersData,
 		allChallengesData,
 		singleChallengeData,
+		darkMode,
 		login,
 		logout,
 		signup,
 		resetPassword,
 		updatePassword,
 		updateEmail,
-		createProfile,
 		getProfile,
+		createProfile,
 		updateUsername,
 		updateBio,
 		updateAvatar,
@@ -248,6 +260,7 @@ export function AuthProvider({ children }) {
 		getAllChallengesData,
 		getSingleChallengeData,
 		doChallenge,
+		switchDarkMode,
 	};
 
 	return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;

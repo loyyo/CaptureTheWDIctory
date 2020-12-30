@@ -44,7 +44,7 @@ export default function SignIn() {
 	const emailRef = useRef();
 	const passwordRef = useRef();
 
-	const { login } = useAuth();
+	const { darkMode, login } = useAuth();
 
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -84,7 +84,7 @@ export default function SignIn() {
 						</Box>
 					)}
 					<TextField
-						className='textfield'
+						className={darkMode === 'true' ? '' : 'textfield'}
 						variant='outlined'
 						margin='normal'
 						required
@@ -97,7 +97,7 @@ export default function SignIn() {
 						inputRef={emailRef}
 					/>
 					<TextField
-						className='textfield'
+						className={darkMode === 'true' ? '' : 'textfield'}
 						variant='outlined'
 						margin='normal'
 						required

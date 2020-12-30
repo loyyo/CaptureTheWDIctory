@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -29,9 +30,10 @@ const debug = () => {
 
 export default function Error() {
 	const classes = useStyles();
+	const { currentUser, darkMode } = useAuth();
 
 	return (
-		<Container maxWidth='md'>
+		<Container maxWidth='lg'>
 			<CssBaseline />
 			<div className={classes.paper}>
 				<Grid container>
@@ -44,38 +46,42 @@ export default function Error() {
 									Prawdopodobnie... :-)
 								</Typography>
 							</Box>
-							<Divider variant='middle' />
-							<Grid justify='center' container spacing={2} row>
-								<Grid item>
-									<Link to='/register'>
-										<Button
-											type='button'
-											fullWidth
-											variant='contained'
-											color='primary'
-											size='large'
-											className={classes.button}
-										>
-											SIGN UP
-										</Button>
-									</Link>
-								</Grid>
-								<Grid item>
-									<Link to='/login'>
-										<Button
-											type='button'
-											fullWidth
-											variant='outlined'
-											color='primary'
-											size='large'
-											className={classes.button}
-										>
-											Sign In
-										</Button>
-									</Link>
-								</Grid>
-							</Grid>
-							<Grid item xs={1} />
+							{!currentUser && (
+								<>
+									<Divider variant='middle' />
+									<Grid justify='center' container spacing={2} row>
+										<Grid item>
+											<Link to='/register'>
+												<Button
+													type='button'
+													fullWidth
+													variant='contained'
+													color='primary'
+													size='large'
+													className={classes.button}
+												>
+													SIGN UP
+												</Button>
+											</Link>
+										</Grid>
+										<Grid item>
+											<Link to='/login'>
+												<Button
+													type='button'
+													fullWidth
+													variant={darkMode === 'true' ? 'contained' : 'outlined'}
+													color={darkMode === 'true' ? 'white' : 'primary'}
+													size='large'
+													className={classes.button}
+												>
+													Sign In
+												</Button>
+											</Link>
+										</Grid>
+									</Grid>
+									<Grid item xs={1} />
+								</>
+							)}
 						</Paper>
 					</Grid>
 				</Grid>

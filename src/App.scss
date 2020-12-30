@@ -2,7 +2,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	transition: all 0.5s ease;
+	// transition: all 0.01s ease;
 }
 
 .textfield {
@@ -11,22 +11,6 @@
 
 .App-leaderboard {
 	overflow-x: hidden;
-}
-
-// Link
-
-.href {
-	color: white;
-}
-.href:hover {
-	color: white;
-}
-
-.href-black {
-	color: black;
-}
-.href-black:hover {
-	color: black;
 }
 
 // leaderboard
@@ -63,4 +47,17 @@
 	.leaderboard-light {
 		border-right: none;
 	}
+}
+
+.href {
+	color: white;
+}
+.href:hover {
+	color: white;
+}
+.href-black {
+	color: black;
+}
+.href-black:hover {
+	color: black;
 }

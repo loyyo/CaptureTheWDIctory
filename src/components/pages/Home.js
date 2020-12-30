@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
 	const classes = useStyles();
+	const { darkMode } = useAuth();
 
 	return (
 		<Container maxWidth='md'>
@@ -65,8 +67,8 @@ export default function Home() {
 										<Button
 											type='button'
 											fullWidth
-											variant='outlined'
-											color='primary'
+											variant={darkMode === 'true' ? 'contained' : 'outlined'}
+											color={darkMode === 'true' ? 'white' : 'primary'}
 											size='large'
 											className={classes.button}
 										>

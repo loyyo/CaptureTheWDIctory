@@ -1,5 +1,5 @@
 import './App.scss';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import AllChallenges from './components/pages/AllChallenges';
 import Home from './components/pages/Home';
@@ -12,9 +12,12 @@ import ForgotPassword from './components/pages/ForgotPassword';
 import Error from './components/pages/Error';
 import Footer from './components/layout/Footer';
 import Header from './components/layout/Header';
-import { AuthProvider } from './contexts/AuthContext';
+import { useAuth } from './contexts/AuthContext';
 import PrivateRoute from './contexts/PrivateRoute';
 import LoggedInRoute from './contexts/LoggedInRoute';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 // Challenges
 import Challenge1 from './components/pages/challenges/Challenge1';
@@ -25,6 +28,21 @@ import Challenge5 from './components/pages/challenges/Challenge5';
 import Challenge6 from './components/pages/challenges/Challenge6';
 
 function App() {
+	const { darkMode } = useAuth();
+
+	const prefersDarkMode = useMediaQuery(
+		darkMode === 'true' ? '(prefers-color-scheme: dark)' : '(prefers-color-scheme: light)'
+	);
+	const theme = useMemo(
+		() =>
+			createMuiTheme({
+				palette: {
+					type: prefersDarkMode ? 'dark' : 'light',
+				},
+			}),
+		[prefersDarkMode]
+	);
+
 	const location = useLocation();
 	const [leaderboard, setLeaderboard] = useState(false);
 	useEffect(() => {
@@ -36,8 +54,9 @@ function App() {
 	}, [location.pathname]);
 
 	return (
-		<AuthProvider>
-			<div className={leaderboard ? 'App-leaderboard' : 'App'}>
+		<div className={leaderboard ? 'App-leaderboard' : 'App'}>
+			<ThemeProvider theme={theme}>
+				<CssBaseline />
 				<Header />
 				<Switch>
 					{/* Home */}
@@ -62,8 +81,8 @@ function App() {
 					<Route component={Error} />
 				</Switch>
 				<Footer />
-			</div>
-		</AuthProvider>
+			</ThemeProvider>
+		</div>
 	);
 }
 
