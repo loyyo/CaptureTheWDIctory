@@ -21,6 +21,7 @@ export function AuthProvider({ children }) {
 	const [currentUserData, setCurrentUserData] = useState();
 	const [allUsersData, setAllUsersData] = useState([]);
 	const [allChallengesData, setAllChallengesData] = useState([]);
+	const [singleChallengeData, setSingleChallengeData] = useState([]);
 
 	function signup(email, password, username) {
 		return auth.createUserWithEmailAndPassword(email, password).then(() => {
@@ -30,17 +31,6 @@ export function AuthProvider({ children }) {
 
 	function login(email, password) {
 		return auth.signInWithEmailAndPassword(email, password);
-	}
-
-	function rememberedLogin(email, password) {
-		return auth
-			.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-			.then(() => {
-				auth.signInWithEmailAndPassword(email, password);
-			})
-			.catch((err) => {
-				console.error(err);
-			});
 	}
 
 	function logout() {
@@ -110,6 +100,7 @@ export function AuthProvider({ children }) {
 			.collection('users')
 			.orderBy('points', 'desc')
 			.limit(1000)
+			.where('points', '>', 0)
 			.get()
 			.then((querySnapshot) => {
 				querySnapshot.forEach((doc) => {
@@ -140,6 +131,28 @@ export function AuthProvider({ children }) {
 			})
 			.catch(function (error) {
 				console.error('Error getting documents:', error);
+			});
+	}
+
+	function getSingleChallengeData(url) {
+		var Data = [];
+
+		return db
+			.collection('challenges')
+			.doc(url)
+			.get()
+			.then((doc) => {
+				if (doc.exists) {
+					Data.push(doc.data());
+				} else {
+					console.error('No such document!');
+				}
+			})
+			.then(() => {
+				setSingleChallengeData(Data);
+			})
+			.catch((error) => {
+				console.error('Error getting document: ', error);
 			});
 	}
 
@@ -191,6 +204,21 @@ export function AuthProvider({ children }) {
 			});
 	}
 
+	function doChallenge(url, challengePoints, user, userPoints) {
+		var points = challengePoints + userPoints;
+
+		return db
+			.collection('users')
+			.doc(user)
+			.update({
+				points: points,
+				[`challenges.${url}`]: true,
+			})
+			.catch((error) => {
+				console.error('Error updating document: ', error);
+			});
+	}
+
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((user) => {
 			setCurrentUser(user);
@@ -204,13 +232,13 @@ export function AuthProvider({ children }) {
 		currentUserData,
 		allUsersData,
 		allChallengesData,
+		singleChallengeData,
 		login,
 		logout,
 		signup,
 		resetPassword,
 		updatePassword,
 		updateEmail,
-		rememberedLogin,
 		createProfile,
 		getProfile,
 		updateUsername,
@@ -218,6 +246,8 @@ export function AuthProvider({ children }) {
 		updateAvatar,
 		getAllUsersData,
 		getAllChallengesData,
+		getSingleChallengeData,
+		doChallenge,
 	};
 
 	return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;

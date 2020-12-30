@@ -3,8 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -45,41 +43,23 @@ export default function SignIn() {
 
 	const emailRef = useRef();
 	const passwordRef = useRef();
-	const rememberRef = useRef();
 
-	const { login, rememberedLogin } = useAuth();
+	const { login } = useAuth();
 
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
-	const [success, setSuccess] = useState(false);
 
 	async function handleSubmit(e) {
 		e.preventDefault();
 
-		if (!rememberRef.current.checked) {
-			try {
-				setLoading(true);
-				setError('');
-				await login(emailRef.current.value, passwordRef.current.value);
-				setSuccess(true);
-				history.push('/profile');
-			} catch {
-				passwordRef.current.value = '';
-				setSuccess(false);
-				setError('Failed to sign in');
-			}
-		} else if (rememberRef.current.checked) {
-			try {
-				setLoading(true);
-				setError('');
-				await rememberedLogin(emailRef.current.value, passwordRef.current.value);
-				setSuccess(true);
-				history.push('/profile');
-			} catch {
-				passwordRef.current.value = '';
-				setSuccess(false);
-				setError('Failed to sign in');
-			}
+		try {
+			setLoading(true);
+			setError('');
+			await login(emailRef.current.value, passwordRef.current.value);
+			history.push('/profile');
+		} catch {
+			passwordRef.current.value = '';
+			setError('Failed to sign in');
 		}
 		setLoading(false);
 	}
@@ -101,31 +81,6 @@ export default function SignIn() {
 								<AlertTitle>An error occured:</AlertTitle>
 								{error}
 							</Alert>
-						</Box>
-					)}
-					{success && (
-						<Box mt={-1} mb={2}>
-							<Collapse in={success}>
-								<Alert
-									variant='outlined'
-									severity='success'
-									action={
-										<IconButton
-											aria-label='close'
-											color='inherit'
-											size='small'
-											onClick={() => {
-												setSuccess(false);
-											}}
-										>
-											<CloseIcon fontSize='inherit' />
-										</IconButton>
-									}
-								>
-									<AlertTitle>Success!</AlertTitle>
-									You have changed been logged in. Redirecting...
-								</Alert>
-							</Collapse>
 						</Box>
 					)}
 					<TextField
@@ -154,12 +109,6 @@ export default function SignIn() {
 						autoComplete='current-password'
 						inputRef={passwordRef}
 					/>
-					<Box mb={-2}>
-						<FormControlLabel
-							control={<Checkbox value='remember' inputRef={rememberRef} color='primary' />}
-							label='Remember me'
-						/>
-					</Box>
 					<Button
 						type='submit'
 						fullWidth

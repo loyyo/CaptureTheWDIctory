@@ -36,20 +36,7 @@ export default function Leaderboard() {
 		}
 	});
 
-	if (allUsersData.length === 0) {
-		return (
-			<Container component='main' maxWidth='lg'>
-				<CssBaseline />
-				<div className={classes.loading}>
-					<Box m={10}>
-						<LinearProgress />
-					</Box>
-				</div>
-			</Container>
-		);
-	}
-
-	if (!currentUserData) {
+	if (!currentUserData || allUsersData.length === 0) {
 		return (
 			<Container component='main' maxWidth='lg'>
 				<CssBaseline />

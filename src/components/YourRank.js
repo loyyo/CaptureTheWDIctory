@@ -13,6 +13,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -28,8 +29,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	button: {
 		width: '100%',
-		height: theme.spacing(10),
+		height: theme.spacing(6),
 		fontSize: theme.spacing(2),
+		background: theme.palette.primary.light,
 	},
 }));
 
@@ -120,20 +122,25 @@ export default function YourRank({ allUsersData, currentUserData }) {
 						</TableBody>
 					</Table>
 				</TableContainer>
-				<Grid item>
-					<Box mt={2} mb={2}>
-						<Button
-							style={{ textDecoration: 'none' }}
-							onClick={() => {
-								history.push('/challenges');
-							}}
-							color='primary'
-							variant='contained'
-							className={classes.button}
-						>
-							GET MORE POINTS!
-						</Button>
-					</Box>
+				{currentUserData.points === 0 && (
+					<div style={{ width: '100%' }}>
+						<Typography variant='h5' className='leaderboard-header-dark' gutterBottom>
+							You need to complete your first challenge!
+						</Typography>
+					</div>
+				)}
+				<Grid item style={{ width: '100%' }}>
+					<Button
+						style={{ textDecoration: 'none' }}
+						onClick={() => {
+							history.push('/challenges');
+						}}
+						color='primary'
+						variant='contained'
+						className={classes.button}
+					>
+						GET MORE POINTS!
+					</Button>
 				</Grid>
 			</Grid>
 		</Paper>

@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function Challenge1() {
+export default function Challenge5() {
 	const classes = useStyles();
 	const { getSingleChallengeData, singleChallengeData, getProfile, currentUserData } = useAuth();
 
@@ -26,16 +26,16 @@ export default function Challenge1() {
 			getProfile();
 		}
 		if (singleChallengeData.length === 0) {
-			getSingleChallengeData('challenge1');
-		} else if (singleChallengeData[0].url !== 'challenge1') {
-			getSingleChallengeData('challenge1');
+			getSingleChallengeData('challenge5');
+		} else if (singleChallengeData[0].url !== 'challenge5') {
+			getSingleChallengeData('challenge5');
 		}
 	});
 
 	if (
 		singleChallengeData.length === 0 ||
 		!currentUserData ||
-		singleChallengeData[0].url !== 'challenge1'
+		singleChallengeData[0].url !== 'challenge5'
 	) {
 		return (
 			<Container component='main' maxWidth='lg'>

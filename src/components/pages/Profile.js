@@ -48,15 +48,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Profile() {
 	const classes = useStyles();
-	const { getProfile, currentUserData } = useAuth();
+	const { getProfile, currentUserData, allChallengesData, getAllChallengesData } = useAuth();
 
 	useEffect(() => {
 		if (!currentUserData) {
 			getProfile();
 		}
+		if (allChallengesData.length === 0) {
+			getAllChallengesData();
+		}
 	});
 
-	if (!currentUserData) {
+	if (!currentUserData || allChallengesData.length === 0) {
 		return (
 			<Container component='main' maxWidth='lg'>
 				<CssBaseline />
@@ -151,84 +154,23 @@ export default function Profile() {
 										<Grid container>
 											<Box ml={3}>
 												<List className={classes.list}>
-													<ListItem className={classes.listitem} divider button>
-														<ListItemIcon>
-															<Checkbox
-																className={classes.checkbox}
-																edge='start'
-																checked={currentUserData.challenges.challenge1}
-																disableRipple
-																disabled
-																color='primary'
-															/>
-														</ListItemIcon>
-														<ListItemText id='challenge1' primary={`Challenge nr 1`} />
-													</ListItem>
-													<ListItem className={classes.listitem} divider button>
-														<ListItemIcon>
-															<Checkbox
-																className={classes.checkbox}
-																edge='start'
-																checked={currentUserData.challenges.challenge2}
-																disableRipple
-																color='primary'
-																disabled
-															/>
-														</ListItemIcon>
-														<ListItemText id='challenge2' primary={`Challenge nr 2`} />
-													</ListItem>
-													<ListItem className={classes.listitem} divider button>
-														<ListItemIcon>
-															<Checkbox
-																className={classes.checkbox}
-																edge='start'
-																checked={currentUserData.challenges.challenge3}
-																disableRipple
-																color='primary'
-																disabled
-															/>
-														</ListItemIcon>
-														<ListItemText id='challenge3' primary={`Challenge nr 3`} />
-													</ListItem>
-													<ListItem className={classes.listitem} divider button>
-														<ListItemIcon>
-															<Checkbox
-																className={classes.checkbox}
-																edge='start'
-																checked={currentUserData.challenges.challenge4}
-																disableRipple
-																color='primary'
-																disabled
-															/>
-														</ListItemIcon>
-														<ListItemText id='challenge4' primary={`Challenge nr 4`} />
-													</ListItem>
-													<ListItem className={classes.listitem} divider button>
-														<ListItemIcon>
-															<Checkbox
-																className={classes.checkbox}
-																edge='start'
-																checked={currentUserData.challenges.challenge5}
-																disableRipple
-																color='primary'
-																disabled
-															/>
-														</ListItemIcon>
-														<ListItemText id='challenge5' primary={`Challenge nr 5`} />
-													</ListItem>
-													<ListItem className={classes.listitem} button>
-														<ListItemIcon>
-															<Checkbox
-																className={classes.checkbox}
-																edge='start'
-																checked={currentUserData.challenges.challenge6}
-																disableRipple
-																color='primary'
-																disabled
-															/>
-														</ListItemIcon>
-														<ListItemText id='challenge6' primary={`Challenge nr 6`} />
-													</ListItem>
+													{allChallengesData.map((e, key) => {
+														return (
+															<ListItem className={classes.listitem} divider button key={key}>
+																<ListItemIcon>
+																	<Checkbox
+																		className={classes.checkbox}
+																		edge='start'
+																		checked={currentUserData.challenges[e.url]}
+																		disableRipple
+																		disabled
+																		color='primary'
+																	/>
+																</ListItemIcon>
+																<ListItemText id='challenge1' primary={e.title} />
+															</ListItem>
+														);
+													})}
 												</List>
 											</Box>
 										</Grid>

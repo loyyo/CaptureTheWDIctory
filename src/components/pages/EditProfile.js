@@ -17,6 +17,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { DropzoneArea } from 'material-ui-dropzone';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -43,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EditProfile() {
 	const classes = useStyles();
+	const history = useHistory();
 
 	const emailRef = useRef();
 	const bioRef = useRef();
@@ -103,7 +105,15 @@ export default function EditProfile() {
 		setError('');
 		Promise.all(promises)
 			.then(() => {
-				setSuccess(true);
+				if (promises.length !== 0) {
+					setSuccess(true);
+					setTimeout(() => {
+						history.push('/profile');
+						history.go(0);
+					}, 1000);
+				} else {
+					setError(`You haven't changed any values`);
+				}
 			})
 			.catch((e) => {
 				if (e instanceof TypeError) {
@@ -112,8 +122,6 @@ export default function EditProfile() {
 					setError('Failed to edit the account');
 				} else if (e instanceof EvalError) {
 					setError('Failed to edit the account');
-				} else {
-					setSuccess(true);
 				}
 			})
 			.finally(() => {
@@ -246,6 +254,7 @@ export default function EditProfile() {
 								/>
 							</Grid>
 						</Grid>
+
 						<Grid container spacing={2} md={6}>
 							<Grid item xs={12}>
 								<TextField
@@ -288,7 +297,9 @@ export default function EditProfile() {
 					</Button>
 					<Grid container justify='center'>
 						<Grid item>
-							<Link to='/profile'>Cancel</Link>
+							<Link to='/profile'>
+								<Button color='primary'>Cancel</Button>
+							</Link>
 						</Grid>
 					</Grid>
 				</form>

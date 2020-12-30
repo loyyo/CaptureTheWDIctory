@@ -56,7 +56,7 @@ export default function Error() {
 											size='large'
 											className={classes.button}
 										>
-											SING UP
+											SIGN UP
 										</Button>
 									</Link>
 								</Grid>

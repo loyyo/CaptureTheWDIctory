@@ -6,7 +6,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 
 import Button from '@material-ui/core/Button';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
 	button: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Challenges({ difficulty, allChallengesData }) {
 	const classes = useStyles();
-	// const history = useHistory();
+	const history = useHistory();
 
 	return (
 		<>
@@ -52,6 +52,9 @@ export default function Challenges({ difficulty, allChallengesData }) {
 													variant='contained'
 													color='primary'
 													className={classes.button}
+													onClick={() => {
+														history.push(`/challenges/${e.url}`);
+													}}
 												>
 													View
 												</Button>

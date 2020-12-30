@@ -26,86 +26,55 @@ export default function Home() {
 	const classes = useStyles();
 
 	return (
-		<Container maxWidth='lg'>
+		<Container maxWidth='md'>
 			<CssBaseline />
 			<Grid container spacing={5}>
-				<Grid item sm={9} md={5}>
+				<Grid item xs={12}>
 					<div className={classes.paper}>
 						<Paper variant='outlined' elevation='3'>
-							<Box mb={5} mt={5} mr={8} ml={8}>
-								<Typography variant='h4' gutterBottom>
-									Join 60,000+ hackers
+							<Box m={3}>
+								<Typography variant='h4' className='leaderboard-header'>
+									Welcome to CTWDIctory!
 								</Typography>
-								<Typography variant='h6' paragraph>
-									CTFlearn is an ethical hacking platform that enables tens of thousands to learn,
-									practice, and compete.
+								<Typography variant='h5' className='leaderboard-light'>
+									CaptureTheWDIctory is a platform that enables people to learn, practice, and
+									compete in the field of WDI curriculum.
 								</Typography>
-								<Typography variant='h6' paragraph>
-									We host an ever-changing array of user-submitted and community-verified challenges
-									in a wide range of topics.
+								<Typography variant='h5' className='leaderboard-header-dark'>
+									JOIN THE WDICREW NOW!
 								</Typography>
 							</Box>
 							<Divider variant='middle' />
-							<Box mt={1}>
-								<Grid justify='center' container spacing={5}>
-									<Grid item>
-										<Link to='/register'>
-											<Button
-												type='button'
-												fullWidth
-												variant='contained'
-												color='primary'
-												size='large'
-												className={classes.button}
-											>
-												SING UP
-											</Button>
-										</Link>
-									</Grid>
-									<Grid item>
-										<Link to='/login'>
-											<Button
-												type='button'
-												fullWidth
-												variant='outlined'
-												color='primary'
-												size='large'
-												className={classes.button}
-											>
-												Sign In
-											</Button>
-										</Link>
-									</Grid>
+							<Grid justify='center' container spacing={3}>
+								<Grid item>
+									<Link to='/register'>
+										<Button
+											type='button'
+											fullWidth
+											variant='contained'
+											color='primary'
+											size='large'
+											className={classes.button}
+										>
+											SIGN UP
+										</Button>
+									</Link>
 								</Grid>
-							</Box>
-						</Paper>
-					</div>
-				</Grid>
-				<Grid item sm={9} md={7}>
-					<div className={classes.paper}>
-						<Paper variant='outlined' elevation='3'>
-							<Box mt={5} mr={5} ml={5}>
-								<Typography variant='h4' gutterBottom>
-									What's new
-								</Typography>
-								<Typography variant='caption'>RE-PROGRAMMED FROM THE GROUND UP</Typography>
-								<Typography variant='h6' paragraph>
-									Allows us to create new features, much faster
-								</Typography>
-								<Typography variant='caption'>CHALLENGE RATINGS</Typography>
-								<Typography variant='h6' paragraph>
-									After solving a challenge, rate it, and contribute to the community rating.
-								</Typography>
-								<Typography variant='caption'>EVENTS</Typography>
-								<Typography variant='h6' paragraph>
-									CTFlearn will now be hosting events!
-								</Typography>
-								<Typography variant='caption'>MUCH MORE</Typography>
-								<Typography variant='h6' paragraph>
-									Check out the rest of the site to see changes to challenges, creating challenges,
-									activity, and more!
-								</Typography>
-							</Box>
+								<Grid item>
+									<Link to='/login'>
+										<Button
+											type='button'
+											fullWidth
+											variant='outlined'
+											color='primary'
+											size='large'
+											className={classes.button}
+										>
+											Sign In
+										</Button>
+									</Link>
+								</Grid>
+							</Grid>
 						</Paper>
 					</div>
 				</Grid>

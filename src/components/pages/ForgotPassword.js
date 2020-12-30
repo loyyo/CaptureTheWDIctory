@@ -15,6 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { useAuth } from '../../contexts/AuthContext';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -38,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ForgotPassword() {
 	const classes = useStyles();
+	const history = useHistory();
 
 	const emailRef = useRef();
 
@@ -55,6 +57,9 @@ export default function ForgotPassword() {
 			setLoading(true);
 			await resetPassword(emailRef.current.value);
 			setSuccess(true);
+			setTimeout(() => {
+				history.push('/login');
+			}, 10000);
 		} catch {
 			setError('Failed to reset password');
 		}
