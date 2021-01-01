@@ -38,6 +38,11 @@ function App() {
 			createMuiTheme({
 				palette: {
 					type: prefersDarkMode ? 'dark' : 'light',
+					primary: {
+						light: prefersDarkMode ? '#3f4fa3' : '#7986cb',
+						main: prefersDarkMode ? '#2c387e' : '#3f51b5',
+						dark: prefersDarkMode ? '#212c6f' : '#303f9f',
+					},
 				},
 			}),
 		[prefersDarkMode]

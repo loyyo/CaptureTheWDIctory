@@ -1,11 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import SettingsIcon from '@material-ui/icons/Settings';
 import Grid from '@material-ui/core/Grid';
-import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -153,12 +150,16 @@ export default function EditProfile() {
 		<Container component='main' maxWidth='lg'>
 			<CssBaseline />
 			<div className={classes.paper}>
-				<Avatar className={classes.avatar}>
-					<SettingsIcon />
-				</Avatar>
 				<Grid container>
 					<Grid item xs={12}>
-						<Typography variant='h4' className='leaderboard-header'>
+						<Typography
+							variant='h4'
+							className={
+								darkMode === 'true'
+									? 'leaderboard-header main-color-darkMode'
+									: 'leaderboard-header'
+							}
+						>
 							Settings
 						</Typography>
 					</Grid>
@@ -298,9 +299,14 @@ export default function EditProfile() {
 					</Button>
 					<Grid container justify='center'>
 						<Grid item>
-							<Link to='/profile'>
-								<Button color='primary'>Cancel</Button>
-							</Link>
+							<Button
+								onClick={() => {
+									history.push('/profile');
+								}}
+								variant='outlined'
+							>
+								Cancel
+							</Button>
 						</Grid>
 					</Grid>
 				</form>

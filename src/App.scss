@@ -5,9 +5,9 @@
 	// transition: all 0.01s ease;
 }
 
-.textfield {
-	background-color: white;
-}
+// .textfield {
+// 	background-color: white;
+// }
 
 .App-leaderboard {
 	overflow-x: hidden;
@@ -15,6 +15,8 @@
 
 // leaderboard
 
+.ratings,
+.description,
 .leaderboard-header-dark,
 .leaderboard-light-right,
 .leaderboard-light,
@@ -29,6 +31,8 @@
 	background-color: #303f9f;
 }
 
+.ratings,
+.description,
 .leaderboard-light-right,
 .leaderboard-light {
 	background-color: #7986cb;
@@ -37,6 +41,20 @@
 	border-left: none;
 	border-width: 0.01rem;
 	height: 100%;
+}
+
+.description {
+	border: none;
+}
+
+.ratings {
+	border-right: none;
+	border-top: none;
+	color: gold;
+	border-color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .leaderboard-light-right {
@@ -49,15 +67,14 @@
 	}
 }
 
-.href {
-	color: white;
+.light-color-darkMode {
+	background-color: #3f4fa3;
 }
-.href:hover {
-	color: white;
+
+.main-color-darkMode {
+	background-color: #2c387e;
 }
-.href-black {
-	color: black;
-}
-.href-black:hover {
-	color: black;
+
+.dark-color-darkMode {
+	background-color: #212c6f;
 }

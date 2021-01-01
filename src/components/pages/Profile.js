@@ -15,7 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +48,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Profile() {
 	const classes = useStyles();
-	const { getProfile, currentUserData, allChallengesData, getAllChallengesData } = useAuth();
+	const history = useHistory();
+	const {
+		darkMode,
+		getProfile,
+		currentUserData,
+		allChallengesData,
+		getAllChallengesData,
+	} = useAuth();
 
 	useEffect(() => {
 		if (!currentUserData) {
@@ -79,7 +86,14 @@ export default function Profile() {
 				<Paper variant='' elevation='6'>
 					<Grid container>
 						<Grid item xs={12}>
-							<Typography variant='h4' className='leaderboard-header'>
+							<Typography
+								variant='h4'
+								className={
+									darkMode === 'true'
+										? 'leaderboard-header main-color-darkMode'
+										: 'leaderboard-header'
+								}
+							>
 								Your Profile
 							</Typography>
 						</Grid>
@@ -123,17 +137,18 @@ export default function Profile() {
 										</Paper>
 									</Box>
 									<Box m={1} mr={3} ml={3} mt={-1}>
-										<Link style={{ textDecoration: 'none' }} to='/profile/settings'>
-											<Button
-												type='button'
-												fullWidth
-												variant='contained'
-												color='primary'
-												className={classes.button}
-											>
-												Edit Profile
-											</Button>
-										</Link>
+										<Button
+											type='button'
+											fullWidth
+											variant='contained'
+											color='primary'
+											className={classes.button}
+											onClick={() => {
+												history.push('/profile/settings');
+											}}
+										>
+											Edit Profile
+										</Button>
 									</Box>
 								</Paper>
 							</Box>

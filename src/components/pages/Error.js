@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,6 +22,14 @@ const useStyles = makeStyles((theme) => ({
 	button: {
 		margin: theme.spacing(2.5, 0, 2.5),
 	},
+	darkModeButton: {
+		margin: theme.spacing(2.5, 0, 2.5),
+		backgroundColor: theme.palette.primary.light,
+		color: 'white',
+		'&:hover': {
+			backgroundColor: theme.palette.primary.dark,
+		},
+	},
 }));
 
 const debug = () => {
@@ -30,6 +38,7 @@ const debug = () => {
 
 export default function Error() {
 	const classes = useStyles();
+	const history = useHistory();
 	const { currentUser, darkMode } = useAuth();
 
 	return (
@@ -51,32 +60,34 @@ export default function Error() {
 									<Divider variant='middle' />
 									<Grid justify='center' container spacing={2} row>
 										<Grid item>
-											<Link to='/register'>
-												<Button
-													type='button'
-													fullWidth
-													variant='contained'
-													color='primary'
-													size='large'
-													className={classes.button}
-												>
-													SIGN UP
-												</Button>
-											</Link>
+											<Button
+												type='button'
+												fullWidth
+												variant='contained'
+												color='primary'
+												size='large'
+												className={classes.button}
+												onClick={() => {
+													history.push('/register');
+												}}
+											>
+												SIGN UP
+											</Button>
 										</Grid>
 										<Grid item>
-											<Link to='/login'>
-												<Button
-													type='button'
-													fullWidth
-													variant={darkMode === 'true' ? 'contained' : 'outlined'}
-													color={darkMode === 'true' ? 'white' : 'primary'}
-													size='large'
-													className={classes.button}
-												>
-													Sign In
-												</Button>
-											</Link>
+											<Button
+												type='button'
+												fullWidth
+												variant={darkMode === 'true' ? 'contained' : 'outlined'}
+												color={darkMode === 'true' ? '' : 'primary'}
+												size='large'
+												className={darkMode === 'true' ? classes.darkModeButton : classes.button}
+												onClick={() => {
+													history.push('/login');
+												}}
+											>
+												Sign In
+											</Button>
 										</Grid>
 									</Grid>
 									<Grid item xs={1} />

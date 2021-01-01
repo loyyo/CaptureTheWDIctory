@@ -25,7 +25,14 @@ export function AuthProvider({ children }) {
 
 	function switchDarkMode() {
 		var XD = localStorage.getItem('darkMode');
-		if (XD === 'true') {
+		if (!XD) {
+			localStorage.setItem('darkMode', 'true');
+			setDarkMode('true');
+		} else if (XD === '') {
+			localStorage.setItem('darkMode', 'true');
+			setDarkMode('true');
+			console.log(XD);
+		} else if (XD === 'true') {
 			localStorage.setItem('darkMode', 'false');
 			setDarkMode('false');
 		} else if (XD === 'false') {
@@ -230,6 +237,20 @@ export function AuthProvider({ children }) {
 			});
 	}
 
+	function rateChallenge(value, challenge, user) {
+		return db
+			.collection('challenges')
+			.doc(challenge)
+			.update({
+				ratings: {
+					[user]: value,
+				},
+			})
+			.catch((error) => {
+				console.error('Error updating document: ', error);
+			});
+	}
+
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((user) => {
 			setCurrentUser(user);
@@ -260,6 +281,7 @@ export function AuthProvider({ children }) {
 		getAllChallengesData,
 		getSingleChallengeData,
 		doChallenge,
+		rateChallenge,
 		switchDarkMode,
 	};
 

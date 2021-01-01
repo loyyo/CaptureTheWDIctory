@@ -70,7 +70,7 @@ export default function AllChallenges() {
 		setValue(newValue);
 	};
 
-	const { getAllChallengesData, allChallengesData } = useAuth();
+	const { darkMode, getAllChallengesData, allChallengesData } = useAuth();
 
 	useEffect(() => {
 		if (allChallengesData.length === 0) {
@@ -97,7 +97,14 @@ export default function AllChallenges() {
 			<div className={classes.paper}>
 				<Grid container direction='column'>
 					<Grid item xs={12}>
-						<Typography variant='h4' className='leaderboard-header'>
+						<Typography
+							variant='h4'
+							className={
+								darkMode === 'true'
+									? 'leaderboard-header main-color-darkMode'
+									: 'leaderboard-header'
+							}
+						>
 							Available Challenges
 						</Typography>
 						<Divider />
@@ -110,6 +117,7 @@ export default function AllChallenges() {
 									<Tab label='Easy' {...a11yProps(1)} />
 									<Tab label='Medium' {...a11yProps(2)} />
 									<Tab label='Hard' {...a11yProps(3)} />
+									<Tab label='Special' {...a11yProps(4)} />
 								</Tabs>
 							</AppBar>
 							<TabPanel value={value} index={0}>
@@ -123,6 +131,9 @@ export default function AllChallenges() {
 							</TabPanel>
 							<TabPanel value={value} index={3}>
 								<Challenges difficulty={'hard'} allChallengesData={allChallengesData} />
+							</TabPanel>
+							<TabPanel value={value} index={4}>
+								<Challenges difficulty={'special'} allChallengesData={allChallengesData} />
 							</TabPanel>
 						</div>
 					</Grid>

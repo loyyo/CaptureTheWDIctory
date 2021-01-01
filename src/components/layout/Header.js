@@ -8,7 +8,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import IconButton from '@material-ui/core/IconButton';
-import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import FlagIcon from '@material-ui/icons/Flag';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
@@ -23,13 +22,22 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: '#000000',
 	},
 	menuButton: {
-		marginRight: theme.spacing(-1),
+		marginLeft: theme.spacing(-0.5),
+		marginRight: theme.spacing(0.5),
 	},
 	title: {
 		flexGrow: 1,
 	},
 	icon: {
 		color: 'white',
+	},
+	href: {
+		color: 'white',
+		textDecoration: 'none',
+		'&:hover': {
+			color: 'white',
+			textDecoration: 'none',
+		},
 	},
 }));
 
@@ -67,29 +75,38 @@ const Header = () => {
 	};
 
 	return (
-		<div>
+		<>
 			<div className={classes.root}>
 				<AppBar color='primary' position='static'>
 					<Toolbar>
-						<Typography variant='h5' className={classes.title}>
-							<Button>
-								<Link className='href' to='/'>
+						<div className={classes.title}>
+							<Button
+								onClick={() => {
+									history.push('/');
+								}}
+							>
+								<Typography className={classes.href} variant='subtitle2'>
 									Capture The WDIctory
-								</Link>
+								</Typography>
 							</Button>
-						</Typography>
+						</div>
 
 						{currentUser !== null && (
 							<>
-								<Button className={classes.menuButton}>
-									<Link className='href' to='/challenges'>
-										<FlagIcon className={classes.icon} />
-									</Link>
+								<Button
+									onClick={() => {
+										history.push('/challenges');
+									}}
+								>
+									<FlagIcon className={classes.icon} />
 								</Button>
-								<Button>
-									<Link className='href' to='/leaderboard'>
-										<EqualizerIcon className={classes.icon} />
-									</Link>
+								<Button
+									onClick={() => {
+										history.push('/leaderboard');
+									}}
+									className={classes.menuButton}
+								>
+									<EqualizerIcon className={classes.icon} />
 								</Button>
 							</>
 						)}
@@ -121,42 +138,57 @@ const Header = () => {
 							>
 								{currentUser === null && (
 									<>
-										<MenuItem onClick={handleClose}>
-											<Link className={darkMode === 'true' ? 'href' : 'href-black'} to='/login'>
-												Login
-											</Link>
+										<MenuItem
+											onClick={() => {
+												handleClose();
+												history.push('/login');
+											}}
+										>
+											Login
 										</MenuItem>
-										<MenuItem onClick={handleClose}>
-											<Link className={darkMode === 'true' ? 'href' : 'href-black'} to='/register'>
-												Sign Up
-											</Link>
+										<MenuItem
+											onClick={() => {
+												handleClose();
+												history.push('/register');
+											}}
+										>
+											Sign Up
 										</MenuItem>
-										<MenuItem onClick={handleDarkMode}>Dark Mode</MenuItem>
+										<MenuItem onClick={handleDarkMode}>
+											{darkMode === 'true' ? 'Light Mode' : 'Dark Mode'}
+										</MenuItem>
 									</>
 								)}
 								{currentUser !== null && (
 									<>
-										<MenuItem onClick={handleClose}>
-											<Link className={darkMode === 'true' ? 'href' : 'href-black'} to='/profile'>
-												Profile
-											</Link>
-										</MenuItem>
-										<MenuItem onClick={handleClose}>
-											<Link
-												className={darkMode === 'true' ? 'href' : 'href-black'}
-												to='/profile/settings'
-											>
-												Settings
-											</Link>
-										</MenuItem>
-										<MenuItem onClick={handleDarkMode}>Dark Mode</MenuItem>
-										<Link
-											onClick={handleLogout}
-											className={darkMode === 'true' ? 'href' : 'href-black'}
-											to='/'
+										<MenuItem
+											onClick={() => {
+												handleClose();
+												history.push('/profile');
+											}}
 										>
-											<MenuItem onClick={handleClose}>Logout</MenuItem>
-										</Link>
+											Profile
+										</MenuItem>
+										<MenuItem
+											onClick={() => {
+												handleClose();
+												history.push('/profile/settings');
+											}}
+										>
+											Settings
+										</MenuItem>
+										<MenuItem
+											onClick={() => {
+												handleClose();
+												handleLogout();
+												history.push('/');
+											}}
+										>
+											Logout
+										</MenuItem>
+										<MenuItem onClick={handleDarkMode}>
+											{darkMode === 'true' ? 'Light Mode' : 'Dark Mode'}
+										</MenuItem>
 									</>
 								)}
 							</Menu>
@@ -164,7 +196,7 @@ const Header = () => {
 					</Toolbar>
 				</AppBar>
 			</div>
-		</div>
+		</>
 	);
 };
 

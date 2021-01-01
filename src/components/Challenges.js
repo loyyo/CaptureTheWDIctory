@@ -4,9 +4,10 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-
+import { useAuth } from '../contexts/AuthContext';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
+import Rating from 'react-rating';
 
 const useStyles = makeStyles((theme) => ({
 	button: {
@@ -17,6 +18,20 @@ const useStyles = makeStyles((theme) => ({
 export default function Challenges({ difficulty, allChallengesData }) {
 	const classes = useStyles();
 	const history = useHistory();
+	const { darkMode } = useAuth();
+
+	const getInitialRating = (challenge) => {
+		var e = challenge.ratings;
+		var v = 0;
+		var i = 0;
+		for (var k in e) {
+			if (e.hasOwnProperty(k)) {
+				v = v + e[k];
+				i = i + 1;
+			}
+		}
+		return v / i;
+	};
 
 	return (
 		<>
@@ -29,21 +44,57 @@ export default function Challenges({ difficulty, allChallengesData }) {
 									<Paper elevation='3'>
 										<Grid container direction='column'>
 											<Grid item>
-												<Typography variant='h5' className='leaderboard-header'>
+												<Typography
+													variant='h5'
+													className={
+														darkMode === 'true'
+															? 'leaderboard-header main-color-darkMode'
+															: 'leaderboard-header'
+													}
+												>
 													{e.title}
 												</Typography>
 											</Grid>
 											<Grid container item>
 												<Grid item xs={12} md={6}>
-													<Typography variant='body1' className='leaderboard-light'>
+													<Typography
+														variant='body1'
+														className={
+															darkMode === 'true'
+																? 'leaderboard-light light-color-darkMode'
+																: 'leaderboard-light'
+														}
+													>
 														{e.points} Points
 													</Typography>
 												</Grid>
 												<Grid item xs={12} md={6}>
-													<Typography variant='body1' className='leaderboard-light-right'>
+													<Typography
+														variant='body1'
+														className={
+															darkMode === 'true'
+																? 'leaderboard-light-right light-color-darkMode'
+																: 'leaderboard-light-right'
+														}
+													>
 														Difficulty: {e.difficulty}
 													</Typography>
 												</Grid>
+											</Grid>
+											<Grid item xs={12}>
+												<Box
+													className={
+														darkMode === 'true' ? 'ratings light-color-darkMode' : 'ratings'
+													}
+												>
+													<Rating
+														emptySymbol='fa fa-star-o fa-2x'
+														fullSymbol='fa fa-star fa-2x'
+														fractions={100}
+														initialRating={getInitialRating(e)}
+														readonly
+													/>
+												</Box>
 											</Grid>
 											<Grid item xs={12}>
 												<Button

@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Leaderboard() {
 	const classes = useStyles();
 
-	const { getAllUsersData, allUsersData, currentUserData, getProfile } = useAuth();
+	const { darkMode, getAllUsersData, allUsersData, currentUserData, getProfile } = useAuth();
 
 	useEffect(() => {
 		if (allUsersData.length === 0) {
@@ -55,14 +55,28 @@ export default function Leaderboard() {
 			<div className={classes.paper}>
 				<Grid container direction='column'>
 					<Grid item xs={12}>
-						<Typography variant='h4' className='leaderboard-header'>
+						<Typography
+							variant='h4'
+							className={
+								darkMode === 'true'
+									? 'leaderboard-header main-color-darkMode'
+									: 'leaderboard-header'
+							}
+						>
 							Your Ranking
 						</Typography>
 						<YourRank currentUserData={currentUserData} allUsersData={allUsersData} />
 					</Grid>
 					<Box mt={1} mb={1} />
 					<Grid item xs={12}>
-						<Typography variant='h4' className='leaderboard-header'>
+						<Typography
+							variant='h4'
+							className={
+								darkMode === 'true'
+									? 'leaderboard-header main-color-darkMode'
+									: 'leaderboard-header'
+							}
+						>
 							Leaderboard
 						</Typography>
 						<Table allUsersData={allUsersData} />

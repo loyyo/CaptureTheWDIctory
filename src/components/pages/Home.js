@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,11 +21,20 @@ const useStyles = makeStyles((theme) => ({
 	button: {
 		margin: theme.spacing(2.5, 0, 2.5),
 	},
+	darkModeButton: {
+		margin: theme.spacing(2.5, 0, 2.5),
+		backgroundColor: theme.palette.primary.light,
+		color: 'white',
+		'&:hover': {
+			backgroundColor: theme.palette.primary.dark,
+		},
+	},
 }));
 
 export default function Home() {
 	const classes = useStyles();
 	const { darkMode } = useAuth();
+	const history = useHistory();
 
 	return (
 		<Container maxWidth='md'>
@@ -35,46 +44,67 @@ export default function Home() {
 					<div className={classes.paper}>
 						<Paper variant='outlined' elevation='3'>
 							<Box m={3}>
-								<Typography variant='h4' className='leaderboard-header'>
+								<Typography
+									variant='h4'
+									className={
+										darkMode === 'true'
+											? 'leaderboard-header main-color-darkMode'
+											: 'leaderboard-header'
+									}
+								>
 									Welcome to CTWDIctory!
 								</Typography>
-								<Typography variant='h5' className='leaderboard-light'>
+								<Typography
+									variant='h5'
+									className={
+										darkMode === 'true' ? 'description light-color-darkMode' : 'description'
+									}
+								>
 									CaptureTheWDIctory is a platform that enables people to learn, practice, and
 									compete in the field of WDI curriculum.
 								</Typography>
-								<Typography variant='h5' className='leaderboard-header-dark'>
-									JOIN THE WDICREW NOW!
+								<Typography
+									variant='h5'
+									className={
+										darkMode === 'true'
+											? 'leaderboard-header-dark dark-color-darkMode'
+											: 'leaderboard-header-dark'
+									}
+								>
+									JOIN THE WDICREW!
 								</Typography>
 							</Box>
 							<Divider variant='middle' />
 							<Grid justify='center' container spacing={3}>
 								<Grid item>
-									<Link to='/register'>
-										<Button
-											type='button'
-											fullWidth
-											variant='contained'
-											color='primary'
-											size='large'
-											className={classes.button}
-										>
-											SIGN UP
-										</Button>
-									</Link>
+									<Button
+										type='button'
+										fullWidth
+										variant='contained'
+										color='primary'
+										size='large'
+										className={classes.button}
+										onClick={() => {
+											history.push('/register');
+										}}
+									>
+										SIGN UP
+									</Button>
 								</Grid>
 								<Grid item>
-									<Link to='/login'>
-										<Button
-											type='button'
-											fullWidth
-											variant={darkMode === 'true' ? 'contained' : 'outlined'}
-											color={darkMode === 'true' ? 'white' : 'primary'}
-											size='large'
-											className={classes.button}
-										>
-											Sign In
-										</Button>
-									</Link>
+									<Button
+										type='button'
+										fullWidth
+										variant={darkMode === 'true' ? 'contained' : 'outlined'}
+										color={darkMode === 'true' ? '' : 'primary'}
+										size='large'
+										className={darkMode === 'true' ? classes.darkModeButton : classes.button}
+										onClick={() => {
+											history.push('/login');
+										}}
+									>
+										Sign In
+									</Button>
 								</Grid>
 							</Grid>
 						</Paper>
