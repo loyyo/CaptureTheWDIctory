@@ -3,9 +3,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import { useAuth } from '../../../contexts/AuthContext';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import ChallengePage from '../../ChallengePage';
+import ChallengePage from '../ChallengePage';
+import { useAuth } from '../../contexts/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function Challenge2() {
+export default function Challenge({ match, location }) {
+	const challengeID = match.url.slice(12);
 	const classes = useStyles();
 	const { getSingleChallengeData, singleChallengeData, getProfile, currentUserData } = useAuth();
 
@@ -26,16 +27,16 @@ export default function Challenge2() {
 			getProfile();
 		}
 		if (singleChallengeData.length === 0) {
-			getSingleChallengeData('challenge2');
-		} else if (singleChallengeData[0].url !== 'challenge2') {
-			getSingleChallengeData('challenge2');
+			getSingleChallengeData(challengeID);
+		} else if (singleChallengeData[0].url !== challengeID) {
+			getSingleChallengeData(challengeID);
 		}
 	});
 
 	if (
 		singleChallengeData.length === 0 ||
 		!currentUserData ||
-		singleChallengeData[0].url !== 'challenge2'
+		singleChallengeData[0].url !== challengeID
 	) {
 		return (
 			<Container component='main' maxWidth='lg'>

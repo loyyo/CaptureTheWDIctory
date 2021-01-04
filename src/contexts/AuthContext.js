@@ -75,14 +75,7 @@ export function AuthProvider({ children }) {
 				avatar:
 					'https://firebasestorage.googleapis.com/v0/b/capturethewdictory.appspot.com/o/avatars%2F0wli9hCJ8mTJbvj.png?alt=media',
 				bio: 'There is nothing to see here unfortunately :(',
-				challenges: {
-					challenge1: false,
-					challenge2: false,
-					challenge3: false,
-					challenge4: false,
-					challenge5: false,
-					challenge6: false,
-				},
+				challenges: {},
 				createdAt: new Date(),
 				email: email,
 				points: 0,
@@ -251,6 +244,18 @@ export function AuthProvider({ children }) {
 			});
 	}
 
+	function addChallenges() {
+		return db.collection('challenges').doc('python2').set({
+			description: 'var a = 5 ---> a += a**2+2*a ---> print(a)',
+			difficulty: 'easy',
+			key: '40',
+			points: 300,
+			title: 'Python2',
+			url: 'python2',
+			ratings: {},
+		});
+	}
+
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((user) => {
 			setCurrentUser(user);
@@ -283,6 +288,7 @@ export function AuthProvider({ children }) {
 		doChallenge,
 		rateChallenge,
 		switchDarkMode,
+		addChallenges,
 	};
 
 	return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;

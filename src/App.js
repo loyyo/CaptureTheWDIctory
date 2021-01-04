@@ -18,14 +18,7 @@ import LoggedInRoute from './contexts/LoggedInRoute';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import CssBaseline from '@material-ui/core/CssBaseline';
-
-// Challenges
-import Challenge1 from './components/pages/challenges/Challenge1';
-import Challenge2 from './components/pages/challenges/Challenge2';
-import Challenge3 from './components/pages/challenges/Challenge3';
-import Challenge4 from './components/pages/challenges/Challenge4';
-import Challenge5 from './components/pages/challenges/Challenge5';
-import Challenge6 from './components/pages/challenges/Challenge6';
+import Challenge from './components/pages/Challenge';
 
 function App() {
 	const { darkMode } = useAuth();
@@ -76,12 +69,7 @@ function App() {
 					<LoggedInRoute exact path='/register' component={Register} />
 					<LoggedInRoute exact path='/reset-password' component={ForgotPassword} />
 					{/* Challenges */}
-					<PrivateRoute exact path='/challenges/challenge1' component={Challenge1} />
-					<PrivateRoute exact path='/challenges/challenge2' component={Challenge2} />
-					<PrivateRoute exact path='/challenges/challenge3' component={Challenge3} />
-					<PrivateRoute exact path='/challenges/challenge4' component={Challenge4} />
-					<PrivateRoute exact path='/challenges/challenge5' component={Challenge5} />
-					<PrivateRoute exact path='/challenges/challenge6' component={Challenge6} />
+					<PrivateRoute exact path='/challenges/:challengeID' component={Challenge} />
 					{/* Error - 404 page */}
 					<Route component={Error} />
 				</Switch>

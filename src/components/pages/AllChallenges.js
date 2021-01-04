@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -9,6 +9,7 @@ import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Typography from '@material-ui/core/Typography';
 
 import { useAuth } from '../../contexts/AuthContext';
@@ -72,6 +73,9 @@ export default function AllChallenges() {
 
 	const { darkMode, getAllChallengesData, allChallengesData } = useAuth();
 
+	const theme = useTheme();
+	const matches = useMediaQuery(theme.breakpoints.down('sm'));
+
 	useEffect(() => {
 		if (allChallengesData.length === 0) {
 			getAllChallengesData();
@@ -117,7 +121,7 @@ export default function AllChallenges() {
 									<Tab label='Easy' {...a11yProps(1)} />
 									<Tab label='Medium' {...a11yProps(2)} />
 									<Tab label='Hard' {...a11yProps(3)} />
-									<Tab label='Special' {...a11yProps(4)} />
+									<Tab hidden={matches} label='Special' {...a11yProps(4)} />
 								</Tabs>
 							</AppBar>
 							<TabPanel value={value} index={0}>

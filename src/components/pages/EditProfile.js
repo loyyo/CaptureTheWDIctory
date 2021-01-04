@@ -277,7 +277,7 @@ export default function EditProfile() {
 									filesLimit={1}
 									onChange={handleChange}
 									dropzoneText={
-										'Drag and drop an image here (or click) to update your avatar (resized to 150x150 automatically)'
+										'Drag and drop an image here (or click) to update your avatar (resized to 200x200 automatically)'
 									}
 									acceptedFiles={['image/jpeg', 'image/jpg', 'image/gif', 'image/png']}
 									id='avatar'

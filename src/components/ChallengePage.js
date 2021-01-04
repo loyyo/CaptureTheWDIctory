@@ -271,7 +271,7 @@ export default function ChallengePage({ challenge, currentUser }) {
 										variant='contained'
 										color='primary'
 										size='large'
-										disabled={loading}
+										disabled={loading ? loading : success}
 										className={classes.button}
 										onClick={checkKey}
 									>

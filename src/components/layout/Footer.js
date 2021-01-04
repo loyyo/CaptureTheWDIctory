@@ -26,6 +26,15 @@ const Footer = () => {
 
 	const { currentUser } = useAuth();
 
+	// async function addChallenge() {
+	// 	try {
+	// 		await addChallenges();
+	// 		console.log('Udalo sie dodac wyzwanie');
+	// 	} catch {
+	// 		console.error('Nie udalo sie dodac zadania');
+	// 	}
+	// }
+
 	useEffect(() => {
 		if (history.location.pathname !== '/challenges') {
 			if (history.location.pathname !== '/leaderboard') {
@@ -68,21 +77,24 @@ const Footer = () => {
 								history.push('/challenges');
 							}}
 							label='Challenges'
-							icon={<FlagIcon />}
+							icon={<FlagIcon stroke='#c6c6c6' stroke-width={1} />}
+							className={classes.icon}
 						/>
 						<BottomNavigationAction
 							onClick={() => {
 								history.push('/leaderboard');
 							}}
 							label='Leaderboard'
-							icon={<EqualizerIcon />}
+							icon={<EqualizerIcon stroke='#c6c6c6' stroke-width={1} />}
+							className={classes.icon}
 						/>
 						<BottomNavigationAction
 							onClick={() => {
 								history.push('/profile');
 							}}
 							label='Profile'
-							icon={<PersonIcon />}
+							icon={<PersonIcon stroke='#c6c6c6' stroke-width={1} />}
+							className={classes.icon}
 						/>
 					</BottomNavigation>
 				</Box>
@@ -97,6 +109,7 @@ const Footer = () => {
 					</Typography>
 				</Box>
 			</div>
+			{/* <button onClick={addChallenge}>ADDCHALENGE</button> */}
 		</Container>
 	);
 };
