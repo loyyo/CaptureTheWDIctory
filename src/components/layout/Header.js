@@ -49,7 +49,7 @@ const Header = () => {
 	const [error, setError] = useState('error');
 	const open = Boolean(anchorEl);
 
-	const { darkMode, switchDarkMode, currentUser, logout } = useAuth();
+	const { switchDarkMode, currentUser, logout } = useAuth();
 
 	async function handleLogout() {
 		setError('');
@@ -154,8 +154,8 @@ const Header = () => {
 										>
 											Sign Up
 										</MenuItem>
-										<MenuItem onClick={handleDarkMode}>
-											{darkMode === 'true' ? 'Light Mode' : 'Dark Mode'}
+										<MenuItem className='headerDarkMode' onClick={handleDarkMode}>
+											{/* {darkMode === 'true' ? 'Light Mode' : 'Dark Mode'} */}
 										</MenuItem>
 									</>
 								)}
@@ -186,8 +186,8 @@ const Header = () => {
 										>
 											Logout
 										</MenuItem>
-										<MenuItem onClick={handleDarkMode}>
-											{darkMode === 'true' ? 'Light Mode' : 'Dark Mode'}
+										<MenuItem className='headerDarkMode' onClick={handleDarkMode}>
+											{/* {darkMode === 'true' ? 'Light Mode' : 'Dark Mode'} */}
 										</MenuItem>
 									</>
 								)}

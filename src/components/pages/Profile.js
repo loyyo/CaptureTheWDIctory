@@ -55,13 +55,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Profile() {
 	const classes = useStyles();
 	const history = useHistory();
-	const {
-		darkMode,
-		getProfile,
-		currentUserData,
-		allChallengesData,
-		getAllChallengesData,
-	} = useAuth();
+	const { getProfile, currentUserData, allChallengesData, getAllChallengesData } = useAuth();
 
 	const theme = useTheme();
 	const lg = useMediaQuery(theme.breakpoints.up('md'));
@@ -109,14 +103,7 @@ export default function Profile() {
 				<Paper variant='' elevation='6'>
 					<Grid container>
 						<Grid item xs={12}>
-							<Typography
-								variant='h4'
-								className={
-									darkMode === 'true'
-										? 'leaderboard-header main-color-darkMode'
-										: 'leaderboard-header'
-								}
-							>
+							<Typography variant='h4' className='leaderboard-header'>
 								Your Profile
 							</Typography>
 						</Grid>

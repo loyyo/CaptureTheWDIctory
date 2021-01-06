@@ -15,6 +15,7 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -96,6 +97,7 @@ TablePaginationActions.propTypes = {
 
 export default function StickyHeadTable({ allUsersData }) {
 	const classes = useStyles();
+	const history = useHistory();
 	const [page, setPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -149,7 +151,15 @@ export default function StickyHeadTable({ allUsersData }) {
 					<TableBody>
 						{rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
 							return (
-								<TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
+								<TableRow
+									hover
+									role='checkbox'
+									onClick={() => {
+										history.push(`/profiles/${row.userID}`);
+									}}
+									tabIndex={-1}
+									key={row.code}
+								>
 									{columns.map((column) => {
 										const value = row[column.id];
 										if (column.id === 'rank') {

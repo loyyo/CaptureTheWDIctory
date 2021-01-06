@@ -50,7 +50,6 @@ export default function EditProfile() {
 	const passwordConfirmationRef = useRef();
 
 	const {
-		darkMode,
 		currentUser,
 		updateEmail,
 		updatePassword,
@@ -151,14 +150,7 @@ export default function EditProfile() {
 			<div className={classes.paper}>
 				<Grid container>
 					<Grid item xs={12}>
-						<Typography
-							variant='h4'
-							className={
-								darkMode === 'true'
-									? 'leaderboard-header main-color-darkMode'
-									: 'leaderboard-header'
-							}
-						>
+						<Typography variant='h4' className='leaderboard-header'>
 							Settings
 						</Typography>
 					</Grid>
@@ -201,7 +193,6 @@ export default function EditProfile() {
 						<Grid container spacing={2} md={6}>
 							<Grid item md={11} xs={12}>
 								<TextField
-									className={darkMode === 'true' ? '' : 'textfield'}
 									variant='outlined'
 									fullWidth
 									id='username'
@@ -218,7 +209,6 @@ export default function EditProfile() {
 							</Grid>
 							<Grid item md={11} xs={12}>
 								<TextField
-									className={darkMode === 'true' ? '' : 'textfield'}
 									variant='outlined'
 									fullWidth
 									id='email'
@@ -231,7 +221,6 @@ export default function EditProfile() {
 							</Grid>
 							<Grid item md={11} xs={12}>
 								<TextField
-									className={darkMode === 'true' ? '' : 'textfield'}
 									variant='outlined'
 									fullWidth
 									name='password'
@@ -245,7 +234,6 @@ export default function EditProfile() {
 							</Grid>
 							<Grid item md={11} xs={12}>
 								<TextField
-									className={darkMode === 'true' ? '' : 'textfield'}
 									variant='outlined'
 									fullWidth
 									name='passwordConfirmation'
@@ -262,7 +250,6 @@ export default function EditProfile() {
 						<Grid container spacing={2} md={6}>
 							<Grid item xs={12}>
 								<TextField
-									className={darkMode === 'true' ? '' : 'textfield'}
 									variant='outlined'
 									fullWidth
 									id='biography'

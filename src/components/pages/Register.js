@@ -46,7 +46,7 @@ export default function SignUp() {
 	const passwordRef = useRef();
 	const passwordConfirmationRef = useRef();
 
-	const { darkMode, signup } = useAuth();
+	const { signup } = useAuth();
 
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -128,7 +128,6 @@ export default function SignUp() {
 					<Grid container spacing={2}>
 						<Grid item xs={12}>
 							<TextField
-								className={darkMode === 'true' ? '' : 'textfield'}
 								variant='outlined'
 								required
 								fullWidth
@@ -145,7 +144,6 @@ export default function SignUp() {
 						</Grid>
 						<Grid item xs={12}>
 							<TextField
-								className={darkMode === 'true' ? '' : 'textfield'}
 								variant='outlined'
 								required
 								fullWidth
@@ -158,7 +156,6 @@ export default function SignUp() {
 						</Grid>
 						<Grid item xs={12}>
 							<TextField
-								className={darkMode === 'true' ? '' : 'textfield'}
 								variant='outlined'
 								required
 								fullWidth
@@ -176,7 +173,6 @@ export default function SignUp() {
 						</Grid>
 						<Grid item xs={12}>
 							<TextField
-								className={darkMode === 'true' ? '' : 'textfield'}
 								variant='outlined'
 								required
 								fullWidth

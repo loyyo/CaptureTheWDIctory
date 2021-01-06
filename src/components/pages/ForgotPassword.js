@@ -43,7 +43,7 @@ export default function ForgotPassword() {
 
 	const emailRef = useRef();
 
-	const { darkMode, resetPassword } = useAuth();
+	const { resetPassword } = useAuth();
 
 	const [error, setError] = useState('');
 	const [success, setSuccess] = useState(false);
@@ -111,7 +111,6 @@ export default function ForgotPassword() {
 						</Box>
 					)}
 					<TextField
-						className={darkMode === 'true' ? '' : 'textfield'}
 						variant='outlined'
 						margin='normal'
 						required

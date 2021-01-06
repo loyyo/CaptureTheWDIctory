@@ -9,7 +9,6 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { useHistory } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -33,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
 	const classes = useStyles();
-	const { darkMode } = useAuth();
 	const history = useHistory();
 
 	return (
@@ -44,33 +42,14 @@ export default function Home() {
 					<div className={classes.paper}>
 						<Paper variant='outlined' elevation='3'>
 							<Box m={3}>
-								<Typography
-									variant='h4'
-									className={
-										darkMode === 'true'
-											? 'leaderboard-header main-color-darkMode'
-											: 'leaderboard-header'
-									}
-								>
+								<Typography variant='h4' className='leaderboard-header'>
 									Welcome to CTWDIctory!
 								</Typography>
-								<Typography
-									variant='h5'
-									className={
-										darkMode === 'true' ? 'description light-color-darkMode' : 'description'
-									}
-								>
+								<Typography variant='h5' className='description'>
 									CaptureTheWDIctory is a platform that enables people to learn, practice, and
 									compete in the field of WDI curriculum.
 								</Typography>
-								<Typography
-									variant='h5'
-									className={
-										darkMode === 'true'
-											? 'leaderboard-header-dark dark-color-darkMode'
-											: 'leaderboard-header-dark'
-									}
-								>
+								<Typography variant='h5' className='leaderboard-header-dark'>
 									JOIN THE WDICREW!
 								</Typography>
 							</Box>

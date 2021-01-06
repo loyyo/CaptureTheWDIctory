@@ -79,7 +79,15 @@ export default function YourRank({ allUsersData, currentUserData }) {
 							{allUsersData.map((row, index) => {
 								if (row['email'] === currentUserData.email) {
 									return (
-										<TableRow hover role='checkbox' tabIndex={-1} key={row.code}>
+										<TableRow
+											hover
+											role='checkbox'
+											onClick={() => {
+												history.push('/profile');
+											}}
+											tabIndex={-1}
+											key={row.code}
+										>
 											{columns.map((column) => {
 												const value = row[column.id];
 												if (column.id === 'rank') {

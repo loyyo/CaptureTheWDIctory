@@ -17,6 +17,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
 	const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode'));
+	const [thisUserData, setThisUserData] = useState();
 	const [currentUser, setCurrentUser] = useState();
 	const [loading, setLoading] = useState(true);
 	const [currentUserData, setCurrentUserData] = useState();
@@ -33,7 +34,6 @@ export function AuthProvider({ children }) {
 		} else if (XD === '') {
 			localStorage.setItem('darkMode', 'true');
 			setDarkMode('true');
-			console.log(XD);
 		} else if (XD === 'true') {
 			localStorage.setItem('darkMode', 'false');
 			setDarkMode('false');
@@ -248,16 +248,38 @@ export function AuthProvider({ children }) {
 			});
 	}
 
-	function addChallenges() {
-		return db.collection('challenges').doc('latex').set({
-			description: 'Jaką komendą stworzymy podsekcję w podsekcji w LaTeXie?',
-			difficulty: 'hard',
-			key: '\\subsubsection',
-			points: 400,
-			title: 'LaTeX',
-			url: 'latex',
-			ratings: {},
-		});
+	// function addChallenges() {
+	// 	return db.collection('challenges').doc('latex').set({
+	// 		description: 'Jaką komendą stworzymy podsekcję w podsekcji w LaTeXie?',
+	// 		difficulty: 'hard',
+	// 		key: '\\subsubsection',
+	// 		points: 400,
+	// 		title: 'LaTeX',
+	// 		url: 'latex',
+	// 		ratings: {},
+	// 	});
+	// }
+
+	function getUserProfile(user) {
+		var exist = false;
+		return db
+			.collection('users')
+			.get()
+			.then((querySnapshot) => {
+				querySnapshot.forEach((doc) => {
+					var Data = doc.data();
+					if (Data.userID === user) {
+						setThisUserData(Data);
+						exist = true;
+					}
+				});
+				if (!exist) {
+					return history.push('/error404');
+				}
+			})
+			.catch(function (error) {
+				console.error('Error getting user:', error);
+			});
 	}
 
 	useEffect(() => {
@@ -270,11 +292,13 @@ export function AuthProvider({ children }) {
 
 	const value = {
 		currentUser,
+		thisUserData,
 		currentUserData,
 		allUsersData,
 		allChallengesData,
 		singleChallengeData,
 		darkMode,
+		getUserProfile,
 		login,
 		logout,
 		signup,
@@ -292,7 +316,7 @@ export function AuthProvider({ children }) {
 		doChallenge,
 		rateChallenge,
 		switchDarkMode,
-		addChallenges,
+		// addChallenges,
 	};
 
 	return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;

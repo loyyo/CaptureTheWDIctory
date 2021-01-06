@@ -71,7 +71,7 @@ export default function AllChallenges() {
 		setValue(newValue);
 	};
 
-	const { darkMode, getAllChallengesData, allChallengesData } = useAuth();
+	const { getAllChallengesData, allChallengesData } = useAuth();
 
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.down('sm'));
@@ -101,14 +101,7 @@ export default function AllChallenges() {
 			<div className={classes.paper}>
 				<Grid container direction='column'>
 					<Grid item xs={12}>
-						<Typography
-							variant='h4'
-							className={
-								darkMode === 'true'
-									? 'leaderboard-header main-color-darkMode'
-									: 'leaderboard-header'
-							}
-						>
+						<Typography variant='h4' className='leaderboard-header'>
 							Available Challenges
 						</Typography>
 						<Divider />

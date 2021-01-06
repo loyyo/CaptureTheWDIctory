@@ -42,7 +42,7 @@ export default function ChallengePage({ challenge, currentUser }) {
 	const keyRef = useRef();
 	const classes = useStyles();
 	const history = useHistory();
-	const { darkMode, doChallenge, rateChallenge } = useAuth();
+	const { doChallenge, rateChallenge } = useAuth();
 
 	async function checkKey() {
 		if (keyRef.current.value.toLowerCase() !== challenge[0].key.toLowerCase()) {
@@ -110,38 +110,19 @@ export default function ChallengePage({ challenge, currentUser }) {
 	return (
 		<Grid container direction='column'>
 			<Grid item xs={12}>
-				<Typography
-					variant='h4'
-					className={
-						darkMode === 'true'
-							? 'leaderboard-header-dark dark-color-darkMode'
-							: 'leaderboard-header-dark'
-					}
-				>
+				<Typography variant='h4' className='leaderboard-header-dark'>
 					{challenge[0].title}
 				</Typography>
 				<Divider />
 			</Grid>
 			<Grid container item xs={12}>
 				<Grid item xs={12} sm={6}>
-					<Typography
-						variant='h6'
-						className={
-							darkMode === 'true' ? 'leaderboard-light light-color-darkMode' : 'leaderboard-light'
-						}
-					>
+					<Typography variant='h6' className='leaderboard-light'>
 						{challenge[0].points} Points
 					</Typography>
 				</Grid>
 				<Grid item xs={12} sm={6}>
-					<Typography
-						variant='h6'
-						className={
-							darkMode === 'true'
-								? 'leaderboard-light-right light-color-darkMode'
-								: 'leaderboard-light-right'
-						}
-					>
+					<Typography variant='h6' className='leaderboard-light-right'>
 						Difficulty: {challenge[0].difficulty}
 					</Typography>
 				</Grid>
@@ -149,7 +130,7 @@ export default function ChallengePage({ challenge, currentUser }) {
 
 			{!currentUser.challenges[challenge[0].url] && (
 				<Grid item xs={12}>
-					<Box className={darkMode === 'true' ? 'ratings light-color-darkMode' : 'ratings'}>
+					<Box className='ratings'>
 						<Typography variant='h6' style={{ color: 'white' }}>
 							Community Ranking:
 						</Typography>
@@ -167,7 +148,7 @@ export default function ChallengePage({ challenge, currentUser }) {
 
 			{currentUser.challenges[challenge[0].url] && (
 				<Grid item xs={12}>
-					<Box className={darkMode === 'true' ? 'ratings light-color-darkMode' : 'ratings'}>
+					<Box className='ratings'>
 						<Typography variant='h6' style={{ color: 'white' }}>
 							Rate This Challenge:
 						</Typography>
@@ -193,14 +174,7 @@ export default function ChallengePage({ challenge, currentUser }) {
 						<div className={classes.info}>
 							<Box>
 								<Paper className={classes.info}>
-									<Typography
-										className={
-											darkMode === 'true'
-												? 'leaderboard-header main-color-darkMode'
-												: 'leaderboard-header'
-										}
-										variant='body1'
-									>
+									<Typography className='leaderboard-header' variant='body1'>
 										{challenge[0].description}
 									</Typography>
 								</Paper>
@@ -211,27 +185,13 @@ export default function ChallengePage({ challenge, currentUser }) {
 						{currentUser.challenges[challenge[0].url] && (
 							<>
 								{challenge[0].ratings[currentUser.userID] && (
-									<Typography
-										variant='h5'
-										className={
-											darkMode === 'true'
-												? 'leaderboard-header-dark dark-color-darkMode'
-												: 'leaderboard-header-dark'
-										}
-									>
+									<Typography variant='h5' className='leaderboard-header-dark'>
 										You've already done & rated this challenge! You can change your vote anytime
 										(◕‿◕✿)
 									</Typography>
 								)}
 								{!challenge[0].ratings[currentUser.userID] && (
-									<Typography
-										variant='h5'
-										className={
-											darkMode === 'true'
-												? 'leaderboard-header-dark dark-color-darkMode'
-												: 'leaderboard-header-dark'
-										}
-									>
+									<Typography variant='h5' className='leaderboard-header-dark'>
 										GG WP! You've successfully completed this challenge. You can now rate it :-) ☝
 									</Typography>
 								)}
