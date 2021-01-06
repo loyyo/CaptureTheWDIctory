@@ -4,6 +4,7 @@ import app from '../firebase';
 import 'firebase/firestore';
 import 'firebase/storage';
 import cryptoRandomString from 'crypto-random-string';
+import { useHistory } from 'react-router-dom';
 
 const db = app.firestore();
 const storageRef = app.storage().ref();
@@ -22,6 +23,7 @@ export function AuthProvider({ children }) {
 	const [allUsersData, setAllUsersData] = useState([]);
 	const [allChallengesData, setAllChallengesData] = useState([]);
 	const [singleChallengeData, setSingleChallengeData] = useState([]);
+	const history = useHistory();
 
 	function switchDarkMode() {
 		var XD = localStorage.getItem('darkMode');
@@ -68,6 +70,8 @@ export function AuthProvider({ children }) {
 	}
 
 	function createProfile(username, email) {
+		var userID = cryptoRandomString({ length: 28, type: 'alphanumeric' });
+
 		return db
 			.collection('users')
 			.doc(`${email}`)
@@ -80,6 +84,7 @@ export function AuthProvider({ children }) {
 				email: email,
 				points: 0,
 				username: username,
+				userID: userID,
 			})
 			.catch((error) => {
 				console.error('Error adding document: ', error);
@@ -157,6 +162,7 @@ export function AuthProvider({ children }) {
 					Data.push(doc.data());
 				} else {
 					console.error('No such document!');
+					return history.push('/error404');
 				}
 			})
 			.then(() => {
@@ -192,7 +198,7 @@ export function AuthProvider({ children }) {
 	}
 
 	function updateAvatar(email, file) {
-		var filename = cryptoRandomString({ length: 20, type: 'alphanumeric' });
+		var filename = cryptoRandomString({ length: 28, type: 'alphanumeric' });
 		var filetype = file.type.slice(6);
 		var fullfilename = `${filename}.${filetype}`;
 
@@ -235,9 +241,7 @@ export function AuthProvider({ children }) {
 			.collection('challenges')
 			.doc(challenge)
 			.update({
-				ratings: {
-					[user]: value,
-				},
+				[`ratings.${user}`]: value,
 			})
 			.catch((error) => {
 				console.error('Error updating document: ', error);
@@ -245,13 +249,13 @@ export function AuthProvider({ children }) {
 	}
 
 	function addChallenges() {
-		return db.collection('challenges').doc('python2').set({
-			description: 'var a = 5 ---> a += a**2+2*a ---> print(a)',
-			difficulty: 'easy',
-			key: '40',
-			points: 300,
-			title: 'Python2',
-			url: 'python2',
+		return db.collection('challenges').doc('latex').set({
+			description: 'Jaką komendą stworzymy podsekcję w podsekcji w LaTeXie?',
+			difficulty: 'hard',
+			key: '\\subsubsection',
+			points: 400,
+			title: 'LaTeX',
+			url: 'latex',
 			ratings: {},
 		});
 	}

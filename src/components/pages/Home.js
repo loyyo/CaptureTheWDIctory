@@ -95,10 +95,9 @@ export default function Home() {
 									<Button
 										type='button'
 										fullWidth
-										variant={darkMode === 'true' ? 'contained' : 'outlined'}
-										color={darkMode === 'true' ? '' : 'primary'}
+										variant='contained'
 										size='large'
-										className={darkMode === 'true' ? classes.darkModeButton : classes.button}
+										className={classes.darkModeButton}
 										onClick={() => {
 											history.push('/login');
 										}}

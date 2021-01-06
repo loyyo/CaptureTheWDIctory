@@ -60,14 +60,13 @@ export default function EditProfile() {
 		updateBio,
 		updateAvatar,
 	} = useAuth();
-
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [file, setFile] = useState([]);
 
-	const regex = `^[0-9A-Za-z]{5,15}$`;
-	const bioregex = `^[\\x00-\\x7F]{1,100}$`;
+	const regex = '^[0-9A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż_-]{5,15}$';
+	const bioregex = '^[\\x00-\\x7F]{1,300}$';
 
 	const handleChange = (e) => {
 		setFile(e);
@@ -211,7 +210,10 @@ export default function EditProfile() {
 									autoComplete='username'
 									inputRef={usernameRef}
 									defaultValue={currentUserData.username}
-									inputProps={{ pattern: regex, title: 'Użyj od 5 do 15 znaków' }}
+									inputProps={{
+										pattern: regex,
+										title: `Użyj od 5 do 15 znaków. Dozwolone znaki specjalne to '-' oraz '_'`,
+									}}
 								/>
 							</Grid>
 							<Grid item md={11} xs={12}>
@@ -268,7 +270,7 @@ export default function EditProfile() {
 									name='biography'
 									inputRef={bioRef}
 									defaultValue={currentUserData.bio}
-									inputProps={{ pattern: bioregex, title: 'Użyj maksymalnie 100 znaków' }}
+									inputProps={{ pattern: bioregex, title: 'Użyj maksymalnie 300 znaków' }}
 								/>
 							</Grid>
 							<Grid item xs={12}>

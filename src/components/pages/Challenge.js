@@ -23,14 +23,16 @@ export default function Challenge({ match, location }) {
 	const { getSingleChallengeData, singleChallengeData, getProfile, currentUserData } = useAuth();
 
 	useEffect(() => {
-		if (!currentUserData) {
-			getProfile();
-		}
-		if (singleChallengeData.length === 0) {
-			getSingleChallengeData(challengeID);
-		} else if (singleChallengeData[0].url !== challengeID) {
-			getSingleChallengeData(challengeID);
-		}
+		setTimeout(() => {
+			if (!currentUserData) {
+				getProfile();
+			}
+			if (singleChallengeData.length === 0) {
+				getSingleChallengeData(challengeID);
+			} else if (singleChallengeData[0].url !== challengeID) {
+				getSingleChallengeData(challengeID);
+			}
+		}, 100);
 	});
 
 	if (

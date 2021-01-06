@@ -39,7 +39,7 @@ const debug = () => {
 export default function Error() {
 	const classes = useStyles();
 	const history = useHistory();
-	const { currentUser, darkMode } = useAuth();
+	const { currentUser } = useAuth();
 
 	return (
 		<Container maxWidth='lg'>
@@ -78,10 +78,9 @@ export default function Error() {
 											<Button
 												type='button'
 												fullWidth
-												variant={darkMode === 'true' ? 'contained' : 'outlined'}
-												color={darkMode === 'true' ? '' : 'primary'}
+												variant='contained'
 												size='large'
-												className={darkMode === 'true' ? classes.darkModeButton : classes.button}
+												className={classes.darkModeButton}
 												onClick={() => {
 													history.push('/login');
 												}}

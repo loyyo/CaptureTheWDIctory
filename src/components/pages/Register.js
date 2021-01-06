@@ -52,7 +52,10 @@ export default function SignUp() {
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
 
-	const regex = `^[0-9A-Za-z!@.;:'"?-]{5,15}$`;
+	const regex = '^[0-9A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż_-]{5,15}$';
+	const regexpw =
+		// eslint-disable-next-line no-useless-escape
+		'^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\dĄĆĘŁŃÓŚŹŻąćęłńóśźż~!@#$%^&*()[{};:|,.<>/?_=+\\]-]{6,}$';
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -134,7 +137,10 @@ export default function SignUp() {
 								name='username'
 								autoComplete='username'
 								inputRef={usernameRef}
-								inputProps={{ pattern: regex, title: 'Użyj od 5 do 15 znaków' }}
+								inputProps={{
+									pattern: regex,
+									title: `Użyj od 5 do 15 znaków. Dozwolone znaki specjalne to '-' oraz '_'`,
+								}}
 							/>
 						</Grid>
 						<Grid item xs={12}>
@@ -162,6 +168,10 @@ export default function SignUp() {
 								id='password'
 								autoComplete='current-password'
 								inputRef={passwordRef}
+								inputProps={{
+									pattern: regexpw,
+									title: 'Użyj minimum 6 znaków, przynajmniej jednej litery oraz jednej cyfry.',
+								}}
 							/>
 						</Grid>
 						<Grid item xs={12}>

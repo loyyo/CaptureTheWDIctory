@@ -45,7 +45,7 @@ export default function ChallengePage({ challenge, currentUser }) {
 	const { darkMode, doChallenge, rateChallenge } = useAuth();
 
 	async function checkKey() {
-		if (keyRef.current.value !== challenge[0].key) {
+		if (keyRef.current.value.toLowerCase() !== challenge[0].key.toLowerCase()) {
 			setError(true);
 		} else {
 			try {
@@ -61,7 +61,7 @@ export default function ChallengePage({ challenge, currentUser }) {
 				setTimeout(() => {
 					// history.push('/challenges');
 					history.go(0);
-				}, 3000);
+				}, 2000);
 			} catch {
 				setError(true);
 				setSuccess(false);
@@ -69,6 +69,12 @@ export default function ChallengePage({ challenge, currentUser }) {
 			setLoading(false);
 		}
 	}
+
+	const kliknietyEnter = (e) => {
+		if (e.key === 'Enter') {
+			checkKey();
+		}
+	};
 
 	const getInitialRating = (challenge) => {
 		var e = challenge.ratings;
@@ -85,7 +91,7 @@ export default function ChallengePage({ challenge, currentUser }) {
 
 	async function handleRating(value) {
 		try {
-			await rateChallenge(value, challenge[0].url, currentUser.email);
+			await rateChallenge(value, challenge[0].url, currentUser.userID);
 			history.push('/challenges');
 			history.go(0);
 		} catch {
@@ -204,7 +210,7 @@ export default function ChallengePage({ challenge, currentUser }) {
 					<Grid item xs={12}>
 						{currentUser.challenges[challenge[0].url] && (
 							<>
-								{challenge[0].ratings[currentUser.email] && (
+								{challenge[0].ratings[currentUser.userID] && (
 									<Typography
 										variant='h5'
 										className={
@@ -217,7 +223,7 @@ export default function ChallengePage({ challenge, currentUser }) {
 										(◕‿◕✿)
 									</Typography>
 								)}
-								{!challenge[0].ratings[currentUser.email] && (
+								{!challenge[0].ratings[currentUser.userID] && (
 									<Typography
 										variant='h5'
 										className={
@@ -247,6 +253,7 @@ export default function ChallengePage({ challenge, currentUser }) {
 											variant='outlined'
 											fullWidth
 											InputProps={{ classes: { input: classes.input } }}
+											onKeyPress={kliknietyEnter}
 										/>
 									)}
 									{success && (

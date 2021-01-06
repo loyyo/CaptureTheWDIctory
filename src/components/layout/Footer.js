@@ -29,6 +29,7 @@ const Footer = () => {
 	// async function addChallenge() {
 	// 	try {
 	// 		await addChallenges();
+	// 		history.go(0);
 	// 		console.log('Udalo sie dodac wyzwanie');
 	// 	} catch {
 	// 		console.error('Nie udalo sie dodac zadania');
@@ -109,7 +110,15 @@ const Footer = () => {
 					</Typography>
 				</Box>
 			</div>
-			{/* <button onClick={addChallenge}>ADDCHALENGE</button> */}
+			{/* <button
+				onClick={addChallenge}
+				// onClick={() => {
+				// 	var xd = 'al-Hariz';
+				// 	console.log(xd.toLowerCase());
+				// }}
+			>
+				ADDCHALENGE
+			</button> */}
 		</Container>
 	);
 };
