@@ -65,7 +65,10 @@ export default function EditProfile() {
 	const [file, setFile] = useState([]);
 
 	const regex = '^[0-9A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż_-]{5,15}$';
-	const bioregex = '^[\\x00-\\x7F]{1,300}$';
+	const bioregex = '^([\\x00-\\x7F]{1,300})$';
+	const regexpw =
+		// eslint-disable-next-line no-useless-escape
+		'^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\dĄĆĘŁŃÓŚŹŻąćęłńóśźż~!@#$%^&*()[{};:|,.<>/?_=+\\]-]{6,}$';
 
 	const handleChange = (e) => {
 		setFile(e);
@@ -85,10 +88,14 @@ export default function EditProfile() {
 			promises.push(updateEmail(emailRef.current.value));
 		}
 		if (emailRef.current.value === currentUser.email) {
-			if (usernameRef.current.value !== currentUserData.username) {
+			if (
+				usernameRef.current.value !== currentUserData.username &&
+				usernameRef.current.value.length < 16
+			) {
+				usernameRef.current.value.slice(0, 15);
 				promises.push(updateUsername(emailRef.current.value, usernameRef.current.value));
 			}
-			if (bioRef.current.value !== currentUserData.bio) {
+			if (bioRef.current.value !== currentUserData.bio && bioRef.current.value.length < 301) {
 				promises.push(updateBio(emailRef.current.value, bioRef.current.value));
 			}
 			if (file.length !== 0) {
@@ -230,6 +237,10 @@ export default function EditProfile() {
 									autoComplete='current-password'
 									inputRef={passwordRef}
 									helperText='*Leave blank to keep the same'
+									inputProps={{
+										pattern: regexpw,
+										title: 'Użyj minimum 6 znaków, przynajmniej jednej litery oraz jednej cyfry.',
+									}}
 								/>
 							</Grid>
 							<Grid item md={11} xs={12}>

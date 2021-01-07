@@ -45,7 +45,7 @@ export default function ChallengePage({ challenge, currentUser }) {
 	const { doChallenge, rateChallenge } = useAuth();
 
 	async function checkKey() {
-		if (keyRef.current.value.toLowerCase() !== challenge[0].key.toLowerCase()) {
+		if (keyRef.current.value.toLowerCase() !== challenge[0].key.toLowerCase() && !loading) {
 			setError(true);
 		} else {
 			try {

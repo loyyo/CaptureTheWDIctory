@@ -5,6 +5,7 @@ import 'firebase/firestore';
 import 'firebase/storage';
 import cryptoRandomString from 'crypto-random-string';
 import { useHistory } from 'react-router-dom';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 const db = app.firestore();
 const storageRef = app.storage().ref();
@@ -25,6 +26,10 @@ export function AuthProvider({ children }) {
 	const [allChallengesData, setAllChallengesData] = useState([]);
 	const [singleChallengeData, setSingleChallengeData] = useState([]);
 	const history = useHistory();
+
+	const messagesRef = db.collection('globalchatmessages');
+	const messageQuery = messagesRef.orderBy('createdAt').limit(100);
+	const [globalMessages] = useCollectionData(messageQuery, { idField: 'id' });
 
 	function switchDarkMode() {
 		var XD = localStorage.getItem('darkMode');
@@ -248,18 +253,6 @@ export function AuthProvider({ children }) {
 			});
 	}
 
-	// function addChallenges() {
-	// 	return db.collection('challenges').doc('latex').set({
-	// 		description: 'Jaką komendą stworzymy podsekcję w podsekcji w LaTeXie?',
-	// 		difficulty: 'hard',
-	// 		key: '\\subsubsection',
-	// 		points: 400,
-	// 		title: 'LaTeX',
-	// 		url: 'latex',
-	// 		ratings: {},
-	// 	});
-	// }
-
 	function getUserProfile(user) {
 		var exist = false;
 		return db
@@ -282,6 +275,31 @@ export function AuthProvider({ children }) {
 			});
 	}
 
+	function sendMessage(text, userID) {
+		return db
+			.collection('globalchatmessages')
+			.add({
+				createdAt: new Date(),
+				text: text,
+				userID: userID,
+			})
+			.catch((error) => {
+				console.error('Error adding document: ', error);
+			});
+	}
+
+	// function addChallenges() {
+	// 	return db.collection('challenges').doc('latex').set({
+	// 		description: 'Jaką komendą stworzymy podsekcję w podsekcji w LaTeXie?',
+	// 		difficulty: 'hard',
+	// 		key: '\\subsubsection',
+	// 		points: 400,
+	// 		title: 'LaTeX',
+	// 		url: 'latex',
+	// 		ratings: {},
+	// 	});
+	// }
+
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((user) => {
 			setCurrentUser(user);
@@ -298,6 +316,9 @@ export function AuthProvider({ children }) {
 		allChallengesData,
 		singleChallengeData,
 		darkMode,
+		globalMessages,
+		// getGlobalMessages,
+		sendMessage,
 		getUserProfile,
 		login,
 		logout,

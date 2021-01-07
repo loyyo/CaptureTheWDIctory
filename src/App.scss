@@ -4,80 +4,8 @@
 	box-sizing: border-box;
 }
 
-// @media only screen and (max-width: 600px) {
-// 	.leaderboard-light {
-// 		border-right: none;
-// 	}
-// }
-
-// .textfield {
-// 	background-color: white;
-// }
-
-// .App-leaderboard {
-// 	overflow-x: hidden;
-// }
-
-// leaderboard
-
-// .ratings,
-// .description,
-// .leaderboard-header-dark,
-// .leaderboard-light-right,
-// .leaderboard-light,
-// .leaderboard-header {
-// 	background-color: #3f51b5;
-// 	color: white;
-// 	padding: 1rem;
-// 	text-align: center;
-// }
-
-// .leaderboard-header-dark {
-// 	background-color: #303f9f;
-// }
-
-// .ratings,
-// .description,
-// .leaderboard-light-right,
-// .leaderboard-light {
-// 	background-color: #7986cb;
-// 	border-color: white;
-// 	border: solid;
-// 	border-left: none;
-// 	border-width: 0.01rem;
-// 	height: 100%;
-// }
-
-// .description {
-// 	border: none;
-// }
-
-// .ratings {
-// 	border-right: none;
-// 	border-top: none;
-// 	color: gold;
-// 	border-color: white;
-// 	display: flex;
-// 	justify-content: center;
-// 	align-items: center;
-// }
-
-// .leaderboard-light-right {
-// 	border-right: none;
-// }
-
-// .light-color-darkMode {
-// 	background-color: #3f4fa3;
-// }
-
-// .main-color-darkMode {
-// 	background-color: #2c387e;
-// }
-
-// .dark-color-darkMode {
-// 	background-color: #212c6f;
-// }
-
-// .headerDarkMode:after {
-// 	content: 'XD';
-// }
+// + media
+.messagesBox {
+	height: 50vh;
+	overflow-y: scroll;
+}

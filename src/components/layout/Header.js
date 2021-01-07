@@ -186,6 +186,14 @@ const Header = () => {
 										>
 											Logout
 										</MenuItem>
+										<MenuItem
+											onClick={() => {
+												handleClose();
+												history.push('/chat');
+											}}
+										>
+											Chat
+										</MenuItem>
 										<MenuItem className='headerDarkMode' onClick={handleDarkMode}>
 											{/* {darkMode === 'true' ? 'Light Mode' : 'Dark Mode'} */}
 										</MenuItem>

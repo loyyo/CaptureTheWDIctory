@@ -163,6 +163,16 @@ export default function Profile() {
 						<Grid item xs={12} lg={9}>
 							<Box m={2} mb={2} ml={3}>
 								<Paper variant='outlined' elevation='3'>
+									{currentUserData.points === 10704 && (
+										<>
+											<Box mb={1} mt={1}>
+												<Typography align='center' display='block' variant='h5'>
+													YOU WON CTWDICTORY!
+												</Typography>
+											</Box>
+											<Divider />
+										</>
+									)}
 									<Box mb={1} mt={1}>
 										<Typography align='center' display='block' variant='h5'>
 											Points: {currentUserData.points}

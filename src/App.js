@@ -20,7 +20,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Challenge from './components/pages/Challenge';
 import UserProfile from './components/pages/UserProfile';
-// import { withStyles } from '@material-ui/core/styles';
+import GlobalChat from './components/pages/GlobalChat';
 
 function App() {
 	const { darkMode } = useAuth();
@@ -45,6 +45,28 @@ function App() {
 				overrides: {
 					MuiCssBaseline: {
 						'@global': {
+							'.messages': {
+								display: 'flex',
+								alignItems: 'center',
+								overflowWrap: 'break-word',
+							},
+							'.sent': {
+								flexDirection: 'row-reverse',
+							},
+							'.sent .message': {
+								color: 'white',
+								background: '#0b93f6',
+								alignSelf: 'flex-end',
+							},
+							'.received .message': {
+								background: '#e5e5ea',
+								color: 'black',
+							},
+							'.message': {
+								maxWidth: '64vw',
+								padding: '10px 20px',
+								borderRadius: '2.5rem',
+							},
 							'.Mui-selected .MuiBottomNavigationAction-wrapper .MuiSvgIcon-root': {
 								color: prefersDarkMode ? '#111111' : '#3f51b5',
 							},
@@ -128,29 +150,6 @@ function App() {
 		[prefersDarkMode, sm]
 	);
 
-	// const GlobalCss = withStyles({
-	// 	'@global': {
-	// 		'.leaderboard-header': {
-	// 			backgroundColor: theme.palette.primary.main,
-	// 		},
-	// 		'.leaderboard-header-dark': {
-	// 			backgroundColor: theme.palette.primary.dark,
-	// 		},
-	// 		'.leaderboard-light': {
-	// 			backgroundColor: theme.palette.primary.light,
-	// 		},
-	// 		'.leaderboard-light-right': {
-	// 			backgroundColor: theme.palette.primary.light,
-	// 		},
-	// 		'.ratings': {
-	// 			backgroundColor: theme.palette.primary.light,
-	// 		},
-	// 		'.description': {
-	// 			backgroundColor: theme.palette.primary.light,
-	// 		},
-	// 	},
-	// })(() => null);
-
 	const location = useLocation();
 	const [leaderboard, setLeaderboard] = useState(false);
 	useEffect(() => {
@@ -165,7 +164,6 @@ function App() {
 		<div className={leaderboard ? 'App-leaderboard' : 'App'}>
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
-				{/* <GlobalCss /> */}
 				<Header />
 				<Switch>
 					{/* Home */}
@@ -175,6 +173,7 @@ function App() {
 					<PrivateRoute exact path='/profile' component={Profile} />
 					<PrivateRoute exact path='/leaderboard' component={Leaderboard} />
 					<PrivateRoute exact path='/profile/settings' component={EditProfile} />
+					<PrivateRoute exact path='/chat' component={GlobalChat} />
 					{/* Authentication */}
 					<LoggedInRoute exact path='/login' component={Login} />
 					<LoggedInRoute exact path='/register' component={Register} />
