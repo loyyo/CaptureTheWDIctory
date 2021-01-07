@@ -79,7 +79,7 @@ const Footer = () => {
 							}}
 							label='Challenges'
 							icon={<FlagIcon stroke='#c6c6c6' stroke-width={1} />}
-							className={classes.icon}
+							className='bottomIcon'
 						/>
 						<BottomNavigationAction
 							onClick={() => {
@@ -87,7 +87,7 @@ const Footer = () => {
 							}}
 							label='Leaderboard'
 							icon={<EqualizerIcon stroke='#c6c6c6' stroke-width={1} />}
-							className={classes.icon}
+							className='bottomIcon'
 						/>
 						<BottomNavigationAction
 							onClick={() => {
@@ -95,7 +95,7 @@ const Footer = () => {
 							}}
 							label='Profile'
 							icon={<PersonIcon stroke='#c6c6c6' stroke-width={1} />}
-							className={classes.icon}
+							className='bottomIcon'
 						/>
 					</BottomNavigation>
 				</Box>

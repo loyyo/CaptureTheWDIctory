@@ -71,18 +71,21 @@ export default function AllChallenges() {
 		setValue(newValue);
 	};
 
-	const { getAllChallengesData, allChallengesData } = useAuth();
+	const { getAllChallengesData, allChallengesData, getProfile, currentUserData } = useAuth();
 
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.down('sm'));
 
 	useEffect(() => {
+		if (!currentUserData) {
+			getProfile();
+		}
 		if (allChallengesData.length === 0) {
 			getAllChallengesData();
 		}
 	});
 
-	if (allChallengesData.length === 0) {
+	if (!currentUserData || allChallengesData.length === 0) {
 		return (
 			<Container component='main' maxWidth='lg'>
 				<CssBaseline />
@@ -118,19 +121,39 @@ export default function AllChallenges() {
 								</Tabs>
 							</AppBar>
 							<TabPanel value={value} index={0}>
-								<Challenges difficulty={'all'} allChallengesData={allChallengesData} />
+								<Challenges
+									difficulty={'all'}
+									allChallengesData={allChallengesData}
+									currentUserData={currentUserData}
+								/>
 							</TabPanel>
 							<TabPanel value={value} index={1}>
-								<Challenges difficulty={'easy'} allChallengesData={allChallengesData} />
+								<Challenges
+									difficulty={'easy'}
+									allChallengesData={allChallengesData}
+									currentUserData={currentUserData}
+								/>
 							</TabPanel>
 							<TabPanel value={value} index={2}>
-								<Challenges difficulty={'medium'} allChallengesData={allChallengesData} />
+								<Challenges
+									difficulty={'medium'}
+									allChallengesData={allChallengesData}
+									currentUserData={currentUserData}
+								/>
 							</TabPanel>
 							<TabPanel value={value} index={3}>
-								<Challenges difficulty={'hard'} allChallengesData={allChallengesData} />
+								<Challenges
+									difficulty={'hard'}
+									allChallengesData={allChallengesData}
+									currentUserData={currentUserData}
+								/>
 							</TabPanel>
 							<TabPanel value={value} index={4}>
-								<Challenges difficulty={'special'} allChallengesData={allChallengesData} />
+								<Challenges
+									difficulty={'special'}
+									allChallengesData={allChallengesData}
+									currentUserData={currentUserData}
+								/>
 							</TabPanel>
 						</div>
 					</Grid>

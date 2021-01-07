@@ -28,6 +28,9 @@ function App() {
 	const prefersDarkMode = useMediaQuery(
 		darkMode === 'true' ? '(prefers-color-scheme: dark)' : '(prefers-color-scheme: light)'
 	);
+
+	const sm = useMediaQuery('(max-width:600px)');
+
 	const theme = useMemo(
 		() =>
 			createMuiTheme({
@@ -42,6 +45,12 @@ function App() {
 				overrides: {
 					MuiCssBaseline: {
 						'@global': {
+							'.Mui-selected .MuiBottomNavigationAction-wrapper .MuiSvgIcon-root': {
+								color: prefersDarkMode ? '#111111' : '#3f51b5',
+							},
+							'.Mui-selected .MuiBottomNavigationAction-wrapper .Mui-selected': {
+								color: prefersDarkMode ? '#111111' : '#3f51b5',
+							},
 							'.headerDarkMode:after': {
 								content: prefersDarkMode ? `'Light Mode'` : `'Dark Mode'`,
 							},
@@ -65,6 +74,8 @@ function App() {
 								color: 'white',
 								border: 'solid',
 								borderLeft: 'none',
+								borderRight: sm ? 'none' : '',
+								borderBottom: sm ? 'none' : '',
 								borderWidth: '0.01rem',
 								height: '100%',
 								borderColor: 'white',
@@ -114,7 +125,7 @@ function App() {
 					},
 				},
 			}),
-		[prefersDarkMode]
+		[prefersDarkMode, sm]
 	);
 
 	// const GlobalCss = withStyles({

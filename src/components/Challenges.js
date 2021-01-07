@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import Rating from 'react-rating';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const useStyles = makeStyles((theme) => ({
 	button: {
@@ -14,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function Challenges({ difficulty, allChallengesData }) {
+export default function Challenges({ difficulty, allChallengesData, currentUserData }) {
 	const classes = useStyles();
 	const history = useHistory();
 
@@ -42,9 +43,27 @@ export default function Challenges({ difficulty, allChallengesData }) {
 									<Paper elevation='3'>
 										<Grid container direction='column'>
 											<Grid item>
-												<Typography variant='h5' className='leaderboard-header'>
-													{e.title}
-												</Typography>
+												{currentUserData.challenges[e.url] && (
+													<>
+														<Typography variant='h5' className='leaderboard-header'>
+															{e.title}
+															<div style={{ display: 'inline-block' }} title='Challenge passed'>
+																<Checkbox
+																	edge='end'
+																	checked={true}
+																	disabled
+																	style={{ marginBottom: '-0.45rem', marginTop: '-0.55rem' }}
+																	color='primary'
+																/>
+															</div>
+														</Typography>
+													</>
+												)}
+												{!currentUserData.challenges[e.url] && (
+													<Typography variant='h5' className='leaderboard-header'>
+														{e.title}
+													</Typography>
+												)}
 											</Grid>
 											<Grid container item>
 												<Grid item xs={12} md={6}>
